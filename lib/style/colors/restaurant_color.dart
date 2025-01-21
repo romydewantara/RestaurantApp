@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum RestaurantColors {
-  blue("Tale", Colors.blue);
+  tale("Tale", Colors.teal);
 
   const RestaurantColors(this.name, this.color);
 

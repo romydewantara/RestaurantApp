@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:restaurant_app/provider/detail/body_of_detail_screen_widget.dart';
 import 'package:restaurant_app/provider/detail/restaurant_detail_provider.dart';
 import 'package:restaurant_app/static/restaurant_detail_result_state.dart';
+import 'package:lottie/lottie.dart';
 
 class DetailScreen extends StatefulWidget {
   final String restaurantId;
@@ -32,31 +33,42 @@ class _DetailScreen extends State<DetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Restaurant Detail'),
-        actions: [
-          /*ChangeNotifierProvider(
-            create: (context) => BookmarkIconProvider(),
-            child: Consumer<RestaurantDetailProvider>(
-              builder: (context, value, child) {
-                return switch (value.resultState) {
-                  RestaurantDetailLoadedState(data: var restaurant) =>
-                      BookmarkIconWidget(restaurant: restaurant),
-                  _ => const SizedBox(),
-                };
-              },
-            ),
-          )*/
-        ],
       ),
       body: Consumer<RestaurantDetailProvider>(
         builder: (context, value, child) {
           return switch (value.resultState) {
-            RestaurantDetailLoadingState() => const Center(
-              child: CircularProgressIndicator(),
+            RestaurantDetailLoadingState() => Center(
+              child: SizedBox(
+                height: 80,
+                width: 80,
+                child: Lottie.asset("assets/loading.json")
+              ),
             ),
             RestaurantDetailLoadedState(data: var restaurantDetail) =>
                 BodyOfDetailScreenWidget(restaurantDetail: restaurantDetail),
             RestaurantDetailErrorState(error: var message) => Center(
-              child: Text(message),
+              child:
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                      height: 60,
+                      width: 60,
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            child: Image.network(
+                              'https://raw.githubusercontent.com/romydewantara/Resources/refs/heads/main/images/Restaurant/error.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                      )
+                  ),
+                  const SizedBox.square(dimension: 10),
+                  Text(message),
+                ],
+              ),
             ),
             _ => const SizedBox(),
           };

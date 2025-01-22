@@ -6,10 +6,7 @@ import 'package:restaurant_app/static/navigation_route.dart';
 class BodyOfHomeScreen extends StatelessWidget {
   final List<Restaurant> restaurantList;
 
-  const BodyOfHomeScreen({
-    super.key,
-    required this.restaurantList
-  });
+  const BodyOfHomeScreen({super.key, required this.restaurantList});
 
   @override
   Widget build(BuildContext context) {

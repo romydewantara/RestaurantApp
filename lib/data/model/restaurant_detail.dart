@@ -31,12 +31,12 @@ class RestaurantDetail {
         city: json["city"],
         address: json["address"],
         pictureId: json["pictureId"],
-        categories: List<Category>.from(json["categories"]
-            .map((x) => Category.fromJson(x))),
+        categories: List<Category>.from(
+            json["categories"].map((x) => Category.fromJson(x))),
         menus: Menus.fromJson(json["menus"]),
         rating: json["rating"]?.toDouble(),
-        customerReview: List<Review>.from(json["customerReviews"]
-            .map((x) => Review.fromJson(x))),
+        customerReview: List<Review>.from(
+            json["customerReviews"].map((x) => Review.fromJson(x))),
       );
 }
 
@@ -48,8 +48,8 @@ class Category {
   });
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-    name: json["name"],
-  );
+        name: json["name"],
+      );
 }
 
 class Menus {
@@ -62,9 +62,11 @@ class Menus {
   });
 
   factory Menus.fromJson(Map<String, dynamic> json) => Menus(
-    foods: List<Category>.from(json["foods"].map((x) => Category.fromJson(x))),
-    drinks: List<Category>.from(json["drinks"].map((x) => Category.fromJson(x))),
-  );
+        foods:
+            List<Category>.from(json["foods"].map((x) => Category.fromJson(x))),
+        drinks: List<Category>.from(
+            json["drinks"].map((x) => Category.fromJson(x))),
+      );
 }
 
 class Food {
@@ -73,10 +75,10 @@ class Food {
   const Food({required this.name});
 
   factory Food.fromJson(Map<String, dynamic> json) => Food(
-    name: json["foods"] != null
-        ? List<Name>.from(json["drinks"]!.map((x) => Name.fromJson(x)))
-        : <Name>[],
-  );
+        name: json["foods"] != null
+            ? List<Name>.from(json["drinks"]!.map((x) => Name.fromJson(x)))
+            : <Name>[],
+      );
 }
 
 class Drink {
@@ -85,10 +87,10 @@ class Drink {
   const Drink({required this.name});
 
   factory Drink.fromJson(Map<String, dynamic> json) => Drink(
-    name: json["drinks"] != null
-        ? List<Name>.from(json["drinks"]!.map((x) => Name.fromJson(x)))
-        : <Name>[],
-  );
+        name: json["drinks"] != null
+            ? List<Name>.from(json["drinks"]!.map((x) => Name.fromJson(x)))
+            : <Name>[],
+      );
 }
 
 class Review {
@@ -98,11 +100,8 @@ class Review {
 
   const Review({required this.name, required this.review, required this.date});
 
-  factory Review.fromJson(Map<String, dynamic> json) => Review(
-      name: json["name"],
-      review: json["review"],
-      date: json["date"]
-  );
+  factory Review.fromJson(Map<String, dynamic> json) =>
+      Review(name: json["name"], review: json["review"], date: json["date"]);
 }
 
 class Name {
@@ -110,7 +109,5 @@ class Name {
 
   const Name({required this.name});
 
-  factory Name.fromJson(Map<String, dynamic> json) => Name(
-      name: json["name"]
-  );
+  factory Name.fromJson(Map<String, dynamic> json) => Name(name: json["name"]);
 }

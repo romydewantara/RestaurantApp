@@ -14,47 +14,42 @@ import 'package:restaurant_app/static/navigation_route.dart';
 import 'package:restaurant_app/style/theme/restaurant_theme.dart';
 
 void main() {
-  runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-              create: (context) => IndexNavProvider(),
-              child: const MyApp()
-          ),
-          Provider(
-            create: (context) => ApiService(),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => SearchProvider(),
-            child: SearchScreen(),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => RestaurantSearchProvider(
-                context.read<ApiService>()
-            ),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => RestaurantListProvider(
-              context.read<ApiService>(),
-            ),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => RestaurantDetailProvider(
-              context.read<ApiService>(),
-            ),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => RestaurantReviewProvider(
-              context.read<ApiService>(),
-            ),
-          ),
-          ChangeNotifierProvider(
-            create: (context) => ReviewProvider(),
-          ),
-        ],
-        child: const MyApp(),
-      )
-  );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+          create: (context) => IndexNavProvider(), child: const MyApp()),
+      Provider(
+        create: (context) => ApiService(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => SearchProvider(),
+        child: SearchScreen(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) =>
+            RestaurantSearchProvider(context.read<ApiService>()),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => RestaurantListProvider(
+          context.read<ApiService>(),
+        ),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => RestaurantDetailProvider(
+          context.read<ApiService>(),
+        ),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => RestaurantReviewProvider(
+          context.read<ApiService>(),
+        ),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ReviewProvider(),
+      ),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -63,20 +58,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'RestaurantApp',
-      theme: RestaurantTheme.lightTheme,
-      darkTheme: RestaurantTheme.darkTheme,
-      themeMode: ThemeMode.system,
+        title: 'RestaurantApp',
+        theme: RestaurantTheme.lightTheme,
+        darkTheme: RestaurantTheme.darkTheme,
+        themeMode: ThemeMode.system,
         initialRoute: NavigationRoute.mainRoute.name,
         routes: {
           NavigationRoute.mainRoute.name: (context) => const MainScreen(),
           NavigationRoute.detailRoute.name: (context) => DetailScreen(
-              restaurantId: ModalRoute.of(context)?.settings.arguments as String
-          ),
+              restaurantId:
+                  ModalRoute.of(context)?.settings.arguments as String),
           NavigationRoute.reviewRoute.name: (context) => ReviewScreen(
-            restaurantId: ModalRoute.of(context)?.settings.arguments as String
-          )
-        }
-    );
+              restaurantId:
+                  ModalRoute.of(context)?.settings.arguments as String)
+        });
   }
 }

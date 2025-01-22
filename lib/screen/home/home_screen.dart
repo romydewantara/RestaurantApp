@@ -6,7 +6,6 @@ import 'package:restaurant_app/static/restaurant_list_result_state.dart';
 import 'package:lottie/lottie.dart';
 
 class HomeScreen extends StatefulWidget {
-
   const HomeScreen({super.key});
 
   @override
@@ -14,11 +13,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   void initState() {
     super.initState();
-    
+
     Future.microtask(() {
       context.read<RestaurantListProvider>().fetchRestaurantList();
     });
@@ -29,19 +27,18 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Consumer<RestaurantListProvider>(
         builder: (context, value, child) {
-          return switch(value.resultState) {
+          return switch (value.resultState) {
             RestaurantListLoadingState() => Center(
-              child: SizedBox(
-                  height: 80,
-                  width: 80,
-                  child: Lottie.asset("assets/loading.json")
+                child: SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: Lottie.asset("assets/loading.json")),
               ),
-            ),
             RestaurantListLoadedState(data: var restaurantList) =>
-                BodyOfHomeScreen(restaurantList: restaurantList),
+              BodyOfHomeScreen(restaurantList: restaurantList),
             RestaurantListErrorState(error: var message) => Center(
-              child: Text(message),
-            ),
+                child: Text(message),
+              ),
             _ => const SizedBox(),
           };
         },

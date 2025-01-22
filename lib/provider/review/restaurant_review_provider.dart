@@ -11,7 +11,8 @@ class RestaurantReviewProvider extends ChangeNotifier {
 
   RestaurantReviewResultState get resultState => _resultState;
 
-  Future<void> writeRestaurantReview(String id, String name, String review) async {
+  Future<void> writeRestaurantReview(
+      String id, String name, String review) async {
     try {
       _resultState = RestaurantReviewLoadingState();
       notifyListeners();

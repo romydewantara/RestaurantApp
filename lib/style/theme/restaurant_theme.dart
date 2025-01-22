@@ -3,15 +3,13 @@ import 'package:restaurant_app/style/colors/restaurant_color.dart';
 import 'package:restaurant_app/style/typography/restaurant_text_style.dart';
 
 class RestaurantTheme {
-
   static ThemeData get lightTheme {
     return ThemeData(
         colorSchemeSeed: RestaurantColors.tale.color,
         brightness: Brightness.light,
         textTheme: _textTheme,
         useMaterial3: true,
-        appBarTheme: _appBarTheme
-    );
+        appBarTheme: _appBarTheme);
   }
 
   static ThemeData get darkTheme {
@@ -20,8 +18,7 @@ class RestaurantTheme {
         brightness: Brightness.dark,
         textTheme: _textTheme,
         useMaterial3: true,
-        appBarTheme: _appBarTheme
-    );
+        appBarTheme: _appBarTheme);
   }
 
   static TextTheme get _textTheme {

@@ -9,10 +9,7 @@ import 'package:restaurant_app/utils/sliver_header_delegate.dart';
 class BodyOfDetailScreenWidget extends StatelessWidget {
   final RestaurantDetail restaurantDetail;
 
-  const BodyOfDetailScreenWidget({
-    super.key,
-    required this.restaurantDetail
-  });
+  const BodyOfDetailScreenWidget({super.key, required this.restaurantDetail});
 
   @override
   Widget build(BuildContext context) {
@@ -29,33 +26,33 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
             background: Hero(
               tag: restaurantDetail.pictureId,
               child: Image.network(
-                'https://restaurant-api.dicoding.dev/images/small/${
-                    restaurantDetail.pictureId
-                }',
+                'https://restaurant-api.dicoding.dev/images/small/${restaurantDetail.pictureId}',
                 fit: BoxFit.cover,
               ),
             ),
             expandedTitleScale: 1.5,
             title: Text(
-                restaurantDetail.name,
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black.withOpacity(0.3),
-                      offset: Offset(40, 40),
-                      blurRadius: 70,
-                    ),
-                  ],
-                ),
+              restaurantDetail.name,
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.white,
+                shadows: [
+                  Shadow(
+                    color: Colors.black.withOpacity(0.3),
+                    offset: Offset(40, 40),
+                    blurRadius: 70,
+                  ),
+                ],
+              ),
             ),
             titlePadding: const EdgeInsets.all(6),
           ),
         ),
         SliverList(
           delegate: SliverChildListDelegate([
-            const SizedBox.square(dimension: 16,),
+            const SizedBox.square(
+              dimension: 16,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
@@ -67,38 +64,38 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                     children: [
                       SizedBox(
                           child: Row(
-                            children: [
-                              const Icon(
-                                Icons.pin_drop,
-                                color: Colors.redAccent,
-                              ),
-                              const SizedBox.square(dimension: 4,),
-                              SizedBox(
-                                  child: Text(
-                                    restaurantDetail.address,
-                                    style: Theme.of(context).textTheme.titleMedium,
-                                  )
-                              )
-                            ],
-                          )
-                      ),
+                        children: [
+                          const Icon(
+                            Icons.pin_drop,
+                            color: Colors.redAccent,
+                          ),
+                          const SizedBox.square(
+                            dimension: 4,
+                          ),
+                          SizedBox(
+                              child: Text(
+                            restaurantDetail.address,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ))
+                        ],
+                      )),
                       SizedBox(
                           child: Row(
-                            children: [
-                              const Icon(
-                                Icons.location_city,
-                                color: Colors.blueAccent,
-                              ),
-                              const SizedBox.square(dimension: 4,),
-                              SizedBox(
-                                  child: Text(
-                                    restaurantDetail.city,
-                                    style: Theme.of(context).textTheme.titleMedium,
-                                  )
-                              )
-                            ],
-                          )
-                      ),
+                        children: [
+                          const Icon(
+                            Icons.location_city,
+                            color: Colors.blueAccent,
+                          ),
+                          const SizedBox.square(
+                            dimension: 4,
+                          ),
+                          SizedBox(
+                              child: Text(
+                            restaurantDetail.city,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ))
+                        ],
+                      )),
                     ],
                   ),
                   Container(
@@ -111,36 +108,32 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                             blurRadius: 1,
                             offset: Offset(0, 2),
                           )
-                        ]
-                    ),
+                        ]),
                     child: Column(
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: (restaurantDetail.rating < 4) ? Colors.red : Colors.green,
+                            color: (restaurantDetail.rating < 4)
+                                ? Colors.red
+                                : Colors.green,
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(18),
-                                topRight: Radius.circular(18)
-                            ),
+                                topRight: Radius.circular(18)),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
                             child: Row(
                               children: [
-                                Text(
-                                    restaurantDetail.rating.toString(),
+                                Text(restaurantDetail.rating.toString(),
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 16,
-                                        fontWeight: FontWeight.bold
-                                    )
+                                        fontWeight: FontWeight.bold)),
+                                const SizedBox.square(
+                                  dimension: 4,
                                 ),
-                                const SizedBox.square(dimension: 4,),
-                                const Icon(
-                                    Icons.star,
-                                    color: Colors.yellow
-                                ),
+                                const Icon(Icons.star, color: Colors.yellow),
                               ],
                             ),
                           ),
@@ -159,7 +152,9 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox.square(dimension: 12,),
+            const SizedBox.square(
+              dimension: 12,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
@@ -201,11 +196,14 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: restaurantDetail.customerReview.length,
                 itemBuilder: (context, index) {
-                  return ReviewCardWidget(review: restaurantDetail.customerReview[index]);
+                  return ReviewCardWidget(
+                      review: restaurantDetail.customerReview[index]);
                 },
               ),
             ),
-            const SizedBox.square(dimension: 16,),
+            const SizedBox.square(
+              dimension: 16,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Text(
@@ -234,13 +232,14 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                   itemCount: restaurantDetail.categories.length,
                   itemBuilder: (context, index) {
                     return CategoryCardWidget(
-                        category: restaurantDetail.categories[index]
-                    );
+                        category: restaurantDetail.categories[index]);
                   },
                 ),
               ),
             ),
-            const SizedBox.square(dimension: 16,)
+            const SizedBox.square(
+              dimension: 16,
+            )
           ]),
         ),
         _header(context, "Foods"),
@@ -250,10 +249,9 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
               width: 100.0,
               height: 100.0,
               child: Center(
-                child: MenuCardWidget(
-                    title: restaurantDetail.menus.foods[index].name.toString()
-                )
-              ),
+                  child: MenuCardWidget(
+                      title:
+                          restaurantDetail.menus.foods[index].name.toString())),
             );
           },
           itemCount: restaurantDetail.menus.foods.length,
@@ -266,9 +264,8 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
               height: 100.0,
               child: Center(
                   child: MenuCardWidget(
-                      title: restaurantDetail.menus.drinks[index].name.toString()
-                  )
-              ),
+                      title: restaurantDetail.menus.drinks[index].name
+                          .toString())),
             );
           },
           itemCount: restaurantDetail.menus.drinks.length,
@@ -278,9 +275,9 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
   }
 
   SliverPersistentHeader _header(
-      BuildContext context,
-      String text,
-      ) {
+    BuildContext context,
+    String text,
+  ) {
     return SliverPersistentHeader(
         pinned: true,
         delegate: SliverHeaderDelegate(
@@ -289,18 +286,13 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
             child: Container(
               color: Color(0xFF0c4160),
               child: Center(
-                child: Text(
-                  text,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold
-                  )
-                ),
+                child: Text(text,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold)),
               ),
-            )
-        )
-    );
+            )));
   }
 }

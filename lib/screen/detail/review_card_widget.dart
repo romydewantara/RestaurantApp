@@ -20,8 +20,7 @@ class ReviewCardWidget extends StatelessWidget {
                 blurRadius: 0,
                 offset: Offset(0, 0),
               )
-            ]
-        ),
+            ]),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
           child: Column(
@@ -47,40 +46,32 @@ class ReviewCardWidget extends StatelessWidget {
                   const SizedBox.square(dimension: 4),
                   Container(
                     constraints: BoxConstraints(minWidth: 125, maxWidth: 125),
-                    child: Text(
-                      review.name,
+                    child: Text(review.name,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            overflow: TextOverflow.ellipsis
-                        )
-                    ),
+                            overflow: TextOverflow.ellipsis)),
                   ),
                 ],
               ),
               const SizedBox.square(dimension: 2),
-              Text(
-                review.date,
+              Text(review.date,
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,
-                      fontStyle: FontStyle.italic
-                  )
-              ),
+                      fontStyle: FontStyle.italic)),
               const SizedBox.square(dimension: 10),
               SizedBox(
                 child: Container(
                   constraints: BoxConstraints(minWidth: 150, maxWidth: 150),
-                  child: Text(
-                    review.review,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                  child: Text(review.review,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                  )
-                  ),
+                        color: Colors.white,
+                        fontSize: 14,
+                      )),
                 ),
               )
             ],

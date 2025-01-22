@@ -47,10 +47,7 @@ final restaurantTextTheme = TextTheme(
   bodyLarge: GoogleFonts.ubuntu(
     fontSize: 16,
   ),
-  bodyMedium: GoogleFonts.ubuntu(
-    fontSize: 14,
-    fontStyle: FontStyle.normal
-  ),
+  bodyMedium: GoogleFonts.ubuntu(fontSize: 14, fontStyle: FontStyle.normal),
   bodySmall: GoogleFonts.ubuntu(
     fontSize: 12,
     fontStyle: FontStyle.italic,

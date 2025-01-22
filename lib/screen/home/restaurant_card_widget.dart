@@ -5,11 +5,8 @@ class RestaurantCard extends StatelessWidget {
   final Restaurant restaurant;
   final Function() onTap;
 
-  const RestaurantCard({
-    super.key,
-    required this.restaurant,
-    required this.onTap
-  });
+  const RestaurantCard(
+      {super.key, required this.restaurant, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +14,8 @@ class RestaurantCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(color: Colors.black)
-        ),
+            borderRadius: BorderRadius.circular(10.0),
+            border: Border.all(color: Colors.black)),
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 6,
@@ -40,15 +36,15 @@ class RestaurantCard extends StatelessWidget {
                   child: Hero(
                     tag: restaurant.pictureId,
                     child: Image.network(
-                      'https://restaurant-api.dicoding.dev/images/small/${
-                          restaurant.pictureId
-                      }',
+                      'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
-              const SizedBox.square(dimension: 14,),
+              const SizedBox.square(
+                dimension: 14,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +55,9 @@ class RestaurantCard extends StatelessWidget {
                       restaurant.name,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    const SizedBox.square(dimension: 4,),
+                    const SizedBox.square(
+                      dimension: 4,
+                    ),
                     Row(
                       children: [
                         const Icon(Icons.pin_drop),
@@ -73,20 +71,23 @@ class RestaurantCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox.square(dimension: 12,),
+                    const SizedBox.square(
+                      dimension: 12,
+                    ),
                     Row(
                       children: [
                         const Icon(
                           Icons.star,
                           color: Colors.yellowAccent,
                         ),
-                        const SizedBox.square(dimension: 4,),
+                        const SizedBox.square(
+                          dimension: 4,
+                        ),
                         Expanded(
                             child: Text(
-                              restaurant.rating.toString(),
-                              style: Theme.of(context).textTheme.labelLarge,
-                            )
-                        )
+                          restaurant.rating.toString(),
+                          style: Theme.of(context).textTheme.labelLarge,
+                        ))
                       ],
                     )
                   ],

@@ -8,23 +8,21 @@ import 'package:lottie/lottie.dart';
 class DetailScreen extends StatefulWidget {
   final String restaurantId;
 
-  const DetailScreen({
-    super.key,
-    required this.restaurantId
-  });
+  const DetailScreen({super.key, required this.restaurantId});
 
   @override
   State<StatefulWidget> createState() => _DetailScreen();
 }
 
 class _DetailScreen extends State<DetailScreen> {
-
   @override
   void initState() {
     super.initState();
 
     Future.microtask(() {
-      context.read<RestaurantDetailProvider>().fetchRestaurantDetail(widget.restaurantId);
+      context
+          .read<RestaurantDetailProvider>()
+          .fetchRestaurantDetail(widget.restaurantId);
     });
   }
 
@@ -38,38 +36,35 @@ class _DetailScreen extends State<DetailScreen> {
         builder: (context, value, child) {
           return switch (value.resultState) {
             RestaurantDetailLoadingState() => Center(
-              child: SizedBox(
-                height: 80,
-                width: 80,
-                child: Lottie.asset("assets/loading.json")
+                child: SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: Lottie.asset("assets/loading.json")),
               ),
-            ),
             RestaurantDetailLoadedState(data: var restaurantDetail) =>
-                BodyOfDetailScreenWidget(restaurantDetail: restaurantDetail),
+              BodyOfDetailScreenWidget(restaurantDetail: restaurantDetail),
             RestaurantDetailErrorState(error: var message) => Center(
-              child:
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                      height: 60,
-                      width: 60,
-                      child: Column(
-                        children: [
-                          ClipRRect(
-                            child: Image.network(
-                              'https://raw.githubusercontent.com/romydewantara/Resources/refs/heads/main/images/Restaurant/error.png',
-                              fit: BoxFit.cover,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                        height: 60,
+                        width: 60,
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              child: Image.network(
+                                'https://raw.githubusercontent.com/romydewantara/Resources/refs/heads/main/images/Restaurant/error.png',
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                        ],
-                      )
-                  ),
-                  const SizedBox.square(dimension: 10),
-                  Text(message),
-                ],
+                          ],
+                        )),
+                    const SizedBox.square(dimension: 10),
+                    Text(message),
+                  ],
+                ),
               ),
-            ),
             _ => const SizedBox(),
           };
         },

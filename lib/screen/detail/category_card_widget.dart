@@ -20,15 +20,12 @@ class CategoryCardWidget extends StatelessWidget {
                 blurRadius: 0,
                 offset: Offset(0, 2),
               )
-            ]
-        ),
+            ]),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
           child: Text(
             category.name,
-            style: TextStyle(
-              color: Colors.white
-            ),
+            style: TextStyle(color: Colors.white),
           ),
         ),
       ),

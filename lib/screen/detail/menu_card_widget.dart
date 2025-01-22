@@ -19,27 +19,22 @@ class MenuCardWidget extends StatelessWidget {
                 blurRadius: 0,
                 offset: Offset(0, 0),
               )
-            ]
-        ),
+            ]),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                      title,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold
-                      )
-                  )
-                ]
-              ),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold))
+                  ]),
               const SizedBox.square(dimension: 10),
               ConstrainedBox(
                 constraints: const BoxConstraints(

@@ -25,17 +25,10 @@ class MainScreen extends StatelessWidget {
           },
           items: const [
             BottomNavigationBarItem(
-                icon: Icon(Icons.home_rounded),
-                label: "Home",
-                tooltip: "Home"
-            ),
+                icon: Icon(Icons.home_rounded), label: "Home", tooltip: "Home"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: "Search",
-                tooltip: "Search"
-            )
-          ]
-      ),
+                icon: Icon(Icons.search), label: "Search", tooltip: "Search")
+          ]),
     );
   }
 }

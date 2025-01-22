@@ -6,10 +6,7 @@ import 'package:restaurant_app/static/navigation_route.dart';
 class BodyOfSearchScreen extends StatelessWidget {
   final List<Restaurant> restaurantList;
 
-  const BodyOfSearchScreen({
-    super.key,
-    required this.restaurantList
-  });
+  const BodyOfSearchScreen({super.key, required this.restaurantList});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +14,7 @@ class BodyOfSearchScreen extends StatelessWidget {
       slivers: [
         SliverList(
           delegate: SliverChildBuilderDelegate(
-                (context, index) {
+            (context, index) {
               final restaurant = restaurantList[index];
 
               return ListTile(

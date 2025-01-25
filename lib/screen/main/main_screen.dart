@@ -4,6 +4,7 @@ import 'package:restaurant_app/provider/main/index_nav_provider.dart';
 import 'package:restaurant_app/screen/favorite/favorite_screen.dart';
 import 'package:restaurant_app/screen/home/home_screen.dart';
 import 'package:restaurant_app/screen/search/search_screen.dart';
+import 'package:restaurant_app/screen/setting/setting_screen.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -16,23 +17,39 @@ class MainScreen extends StatelessWidget {
           return switch (value.indexBottomNavBar) {
             0 => const HomeScreen(),
             1 => const SearchScreen(),
-            _ => const FavoriteScreen(),
+            2 => const FavoriteScreen(),
+            _ => const SettingScreen(),
           };
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
-          currentIndex: context.watch<IndexNavProvider>().indexBottomNavBar,
-          onTap: (index) {
-            context.read<IndexNavProvider>().setIndexBottomNavBar = index;
-          },
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home_rounded), label: "Home", tooltip: "Home"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.search), label: "Search", tooltip: "Search"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.favorite), label: "Favorite", tooltip: "Favorite"),
-          ]),
+        currentIndex: context.watch<IndexNavProvider>().indexBottomNavBar,
+        onTap: (index) {
+          context.read<IndexNavProvider>().setIndexBottomNavBar = index;
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded),
+            label: "Home",
+            tooltip: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: "Search",
+            tooltip: "Search",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: "Favorite",
+            tooltip: "Favorite",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_rounded),
+            label: "Setting",
+            tooltip: "Setting",
+          ),
+        ],
+      ),
     );
   }
 }

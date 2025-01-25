@@ -20,6 +20,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   final TextEditingController searchController = TextEditingController();
 
   @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     Future.microtask(() {
       context.read<LocalDatabaseProvider>().loadFavoriteRestaurants();

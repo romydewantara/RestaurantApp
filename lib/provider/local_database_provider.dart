@@ -24,16 +24,13 @@ class LocalDatabaseProvider extends ChangeNotifier {
       final isError = result == 0;
       if (isError) {
         _message = "Failed to save your data";
-        debugPrint('addFavoriteRestaurant - failed to save');
         notifyListeners();
       } else {
         _message = "Your data is saved";
-        debugPrint('addFavoriteRestaurant - save successfully');
         notifyListeners();
       }
     } catch (e) {
       _message = "Failed to save your data";
-      debugPrint('addFavoriteRestaurant - something error');
       notifyListeners();
     }
   }
@@ -43,12 +40,9 @@ class LocalDatabaseProvider extends ChangeNotifier {
       _restaurantList = await _service.getAllItems();
       _restaurant = null;
       _message = "All of your data is loaded";
-      debugPrint('loadFavoriteRestaurants - data loaded');
       notifyListeners();
     } catch (e, stackTrace) {
       _message = "Failed to load your all data";
-      debugPrint('loadFavoriteRestaurants - load fata failed: $e');
-      debugPrint(stackTrace.toString());
       notifyListeners();
     }
   }
@@ -87,11 +81,9 @@ class LocalDatabaseProvider extends ChangeNotifier {
       await _service.removeItem(id);
 
       _message = "Your data is removed";
-      debugPrint('loadFavoriteRestaurants - data removed');
       notifyListeners();
     } catch (e) {
       _message = "Failed to remove your data";
-      debugPrint('loadFavoriteRestaurants - failed to remove data');
       notifyListeners();
     }
   }
@@ -101,7 +93,6 @@ class LocalDatabaseProvider extends ChangeNotifier {
       return false;
     }
     final isSameRestaurant = _restaurant!.id == id;
-    debugPrint('isSame: $isSameRestaurant');
     return isSameRestaurant;
   }
 }

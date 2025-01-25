@@ -5,22 +5,47 @@ import 'package:restaurant_app/provider/local_database_provider.dart';
 import 'package:restaurant_app/provider/main/index_nav_provider.dart';
 import 'package:restaurant_app/provider/home/restaurant_list_provider.dart';
 import 'package:restaurant_app/provider/detail/restaurant_detail_provider.dart';
+import 'package:restaurant_app/provider/notification/notification_state_provider.dart';
 import 'package:restaurant_app/provider/review/restaurant_review_provider.dart';
 import 'package:restaurant_app/provider/search/restaurant_search_provider.dart';
 import 'package:restaurant_app/provider/search/search_provider.dart';
+import 'package:restaurant_app/provider/setting/shared_preferences_provider.dart';
+import 'package:restaurant_app/provider/theme/theme_state_provider.dart';
 import 'package:restaurant_app/screen/main/main_screen.dart';
 import 'package:restaurant_app/screen/detail/detail_screen.dart';
 import 'package:restaurant_app/screen/review/review_screen.dart';
 import 'package:restaurant_app/screen/search/search_screen.dart';
 import 'package:restaurant_app/service/restaurant_sqlite_service.dart';
+import 'package:restaurant_app/service/shared_preferences_service.dart';
 import 'package:restaurant_app/static/navigation_route.dart';
 import 'package:restaurant_app/style/theme/restaurant_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  final sharedPreferences = await SharedPreferences.getInstance();
+
   runApp(MultiProvider(
     providers: [
+      Provider(
+        create: (context) => SharedPreferencesService(sharedPreferences),
+      ),
       ChangeNotifierProvider(
-          create: (context) => IndexNavProvider(), child: const MyApp()),
+        create: (context) => SharedPreferencesProvider(
+          context.read<SharedPreferencesService>(),
+        ),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => IndexNavProvider(),
+        //child: const MyApp(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => NotificationStateProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => ThemeStateProvider(),
+      ),
       Provider(
         create: (context) => ApiService(),
       ),
@@ -51,7 +76,7 @@ void main() {
         create: (context) => ReviewProvider(),
       ),
       Provider(
-          create: (context) => RestaurantSqliteService()
+        create: (context) => RestaurantSqliteService(),
       ),
       ChangeNotifierProvider(
         create: (context) => LocalDatabaseProvider(
@@ -68,23 +93,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sharedPreferenceProvider =
+    context.watch<SharedPreferencesProvider>();
+    sharedPreferenceProvider.getSettingValue();
+
     return MaterialApp(
-        title: 'RestaurantApp',
-        theme: RestaurantTheme.lightTheme,
-        darkTheme: RestaurantTheme.darkTheme,
-        themeMode: ThemeMode.system,
-        initialRoute: NavigationRoute.mainRoute.name,
-        routes: {
-          NavigationRoute.mainRoute.name: (context) => const MainScreen(),
-          NavigationRoute.detailRoute.name: (context) => DetailScreen(
-              restaurantId:
-              ModalRoute.of(context)?.settings.arguments as String
-          ),
-          NavigationRoute.reviewRoute.name: (context) => ReviewScreen(
-              restaurantId:
-              ModalRoute.of(context)?.settings.arguments as String
-          )
-        },
+      title: 'RestaurantApp',
+      theme: RestaurantTheme.lightTheme,
+      darkTheme: RestaurantTheme.darkTheme,
+      themeMode: sharedPreferenceProvider.getThemeMode(),
+      initialRoute: NavigationRoute.mainRoute.name,
+      routes: {
+        NavigationRoute.mainRoute.name: (context) => const MainScreen(),
+        NavigationRoute.detailRoute.name: (context) => DetailScreen(
+            restaurantId: ModalRoute.of(context)?.settings.arguments as String),
+        NavigationRoute.reviewRoute.name: (context) => ReviewScreen(
+            restaurantId: ModalRoute.of(context)?.settings.arguments as String)
+      },
     );
   }
 }

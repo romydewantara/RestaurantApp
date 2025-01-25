@@ -97,8 +97,6 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
                             final restaurant = context
                                 .watch<RestaurantListProvider>()
                                 .getRestaurantById(id);
-                            debugPrint(
-                                'Selected - id: $id | value: ${widget.restaurantDetail.name}');
 
                             return FavoriteIconWidget(restaurant: restaurant!);
                           },

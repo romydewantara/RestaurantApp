@@ -5,20 +5,32 @@ import 'package:restaurant_app/style/typography/restaurant_text_style.dart';
 class RestaurantTheme {
   static ThemeData get lightTheme {
     return ThemeData(
-        colorSchemeSeed: RestaurantColors.tale.color,
-        brightness: Brightness.light,
-        textTheme: _textTheme,
-        useMaterial3: true,
-        appBarTheme: _appBarTheme);
+      colorSchemeSeed: RestaurantColors.tale.color,
+      brightness: Brightness.light,
+      textTheme: _textTheme,
+      useMaterial3: true,
+      appBarTheme: _appBarTheme,
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: Colors.white,
+        selectedItemColor: Color(0xFF0c4160),
+        unselectedItemColor: Colors.grey,
+      )
+    );
   }
 
   static ThemeData get darkTheme {
     return ThemeData(
-        colorSchemeSeed: RestaurantColors.tale.color,
-        brightness: Brightness.dark,
-        textTheme: _textTheme,
-        useMaterial3: true,
-        appBarTheme: _appBarTheme);
+      colorSchemeSeed: RestaurantColors.tale.color,
+      brightness: Brightness.dark,
+      textTheme: _textTheme,
+      useMaterial3: true,
+      appBarTheme: _appBarTheme,
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: Colors.black,
+        selectedItemColor: Colors.teal,
+        unselectedItemColor: Colors.grey,
+      )
+    );
   }
 
   static TextTheme get _textTheme {

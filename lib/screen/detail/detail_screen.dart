@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/provider/detail/body_of_detail_screen_widget.dart';
 import 'package:restaurant_app/provider/detail/restaurant_detail_provider.dart';
+import 'package:restaurant_app/provider/home/restaurant_list_provider.dart';
 import 'package:restaurant_app/static/restaurant_detail_result_state.dart';
 import 'package:lottie/lottie.dart';
 
@@ -20,8 +21,7 @@ class _DetailScreen extends State<DetailScreen> {
     super.initState();
 
     Future.microtask(() {
-      context
-          .read<RestaurantDetailProvider>()
+      context.read<RestaurantDetailProvider>()
           .fetchRestaurantDetail(widget.restaurantId);
     });
   }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
+import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/static/restaurant_list_result_state.dart';
 
 class RestaurantListProvider extends ChangeNotifier {
   final ApiService _apiServices;
+  List<Restaurant> _restaurants = [];
 
   RestaurantListProvider(this._apiServices);
 
@@ -23,6 +25,7 @@ class RestaurantListProvider extends ChangeNotifier {
         notifyListeners();
       } else {
         _resultState = RestaurantListLoadedState(result.restaurants);
+        _restaurants = result.restaurants;
         notifyListeners();
       }
     } on Exception catch (e) {
@@ -30,4 +33,14 @@ class RestaurantListProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Restaurant? getRestaurantById(String id) {
+    for (var restaurant in _restaurants) {
+      if (restaurant.id == id) {
+        return restaurant;
+      }
+    }
+    return null;
+  }
+
 }

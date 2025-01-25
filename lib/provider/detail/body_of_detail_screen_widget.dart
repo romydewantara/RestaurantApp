@@ -1,15 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
+import 'package:restaurant_app/provider/detail/favorite_icon_provider.dart';
+import 'package:restaurant_app/provider/home/restaurant_list_provider.dart';
 import 'package:restaurant_app/screen/detail/category_card_widget.dart';
+import 'package:restaurant_app/screen/detail/favorite_icon_widget.dart';
 import 'package:restaurant_app/screen/detail/menu_card_widget.dart';
 import 'package:restaurant_app/screen/detail/review_card_widget.dart';
 import 'package:restaurant_app/static/navigation_route.dart';
 import 'package:restaurant_app/utils/sliver_header_delegate.dart';
 
-class BodyOfDetailScreenWidget extends StatelessWidget {
+class BodyOfDetailScreenWidget extends StatefulWidget {
   final RestaurantDetail restaurantDetail;
 
   const BodyOfDetailScreenWidget({super.key, required this.restaurantDetail});
+
+  @override
+  State<BodyOfDetailScreenWidget> createState() => _BodyOfDetailScreenWidgetState();
+}
+
+class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
+
+  @override
+  void initState() {
+
+    super.initState();
+    Future.microtask(() {
+      context.read<RestaurantListProvider>().fetchRestaurantList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,26 +43,71 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
           snap: true,
           flexibleSpace: FlexibleSpaceBar(
             background: Hero(
-              tag: restaurantDetail.pictureId,
+              tag: widget.restaurantDetail.pictureId,
               child: Image.network(
-                'https://restaurant-api.dicoding.dev/images/small/${restaurantDetail.pictureId}',
+                'https://restaurant-api.dicoding.dev/images/small/${widget.restaurantDetail.pictureId}',
                 fit: BoxFit.cover,
               ),
             ),
             expandedTitleScale: 1.5,
-            title: Text(
-              restaurantDetail.name,
-              style: TextStyle(
-                fontSize: 24,
-                color: Colors.white,
-                shadows: [
-                  Shadow(
-                    color: Colors.black.withOpacity(0.3),
-                    offset: Offset(40, 40),
-                    blurRadius: 70,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: Text(
+                    widget.restaurantDetail.name,
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black.withOpacity(0.3),
+                          offset: Offset(40, 40),
+                          blurRadius: 70,
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
+                ),
+                Flexible(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      minWidth: 30,
+                      maxWidth: 30,
+                      minHeight: 30,
+                      maxHeight: 30
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 5,
+                            offset: Offset(0, 0),
+                          ),
+                        ],
+                      ),
+                      child: ChangeNotifierProvider(
+                        create: (context) => FavoriteIconProvider(),
+                        child: Consumer<RestaurantListProvider>(
+                          builder: (context, value, child) {
+                            final id = widget.restaurantDetail.id;
+                            final restaurant = context
+                                .watch<RestaurantListProvider>()
+                                .getRestaurantById(id);
+                            debugPrint(
+                                'Selected - id: $id | value: ${widget.restaurantDetail.name}');
+
+                            return FavoriteIconWidget(restaurant: restaurant!);
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
             titlePadding: const EdgeInsets.all(6),
           ),
@@ -74,7 +138,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                           ),
                           SizedBox(
                               child: Text(
-                            restaurantDetail.address,
+                            widget.restaurantDetail.address,
                             style: Theme.of(context).textTheme.titleMedium,
                           ))
                         ],
@@ -91,7 +155,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                           ),
                           SizedBox(
                               child: Text(
-                            restaurantDetail.city,
+                            widget.restaurantDetail.city,
                             style: Theme.of(context).textTheme.titleMedium,
                           ))
                         ],
@@ -113,7 +177,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: (restaurantDetail.rating < 4)
+                            color: (widget.restaurantDetail.rating < 4)
                                 ? Colors.red
                                 : Colors.green,
                             borderRadius: BorderRadius.only(
@@ -125,7 +189,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                                 left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
                             child: Row(
                               children: [
-                                Text(restaurantDetail.rating.toString(),
+                                Text(widget.restaurantDetail.rating.toString(),
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 16,
@@ -169,7 +233,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                       Navigator.pushNamed(
                         context,
                         NavigationRoute.reviewRoute.name,
-                        arguments: restaurantDetail.id,
+                        arguments: widget.restaurantDetail.id,
                       );
                     },
                     child: Row(
@@ -194,10 +258,10 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
               child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
-                itemCount: restaurantDetail.customerReview.length,
+                itemCount: widget.restaurantDetail.customerReview.length,
                 itemBuilder: (context, index) {
                   return ReviewCardWidget(
-                      review: restaurantDetail.customerReview[index]);
+                      review: widget.restaurantDetail.customerReview[index]);
                 },
               ),
             ),
@@ -215,7 +279,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Text(
-                restaurantDetail.description,
+                widget.restaurantDetail.description,
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyLarge,
@@ -229,10 +293,10 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                 child: ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: restaurantDetail.categories.length,
+                  itemCount: widget.restaurantDetail.categories.length,
                   itemBuilder: (context, index) {
                     return CategoryCardWidget(
-                        category: restaurantDetail.categories[index]);
+                        category: widget.restaurantDetail.categories[index]);
                   },
                 ),
               ),
@@ -251,10 +315,10 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
               child: Center(
                   child: MenuCardWidget(
                       title:
-                          restaurantDetail.menus.foods[index].name.toString())),
+                          widget.restaurantDetail.menu.foods[index].name.toString())),
             );
           },
-          itemCount: restaurantDetail.menus.foods.length,
+          itemCount: widget.restaurantDetail.menu.foods.length,
         ),
         _header(context, "Drinks"),
         SliverList.builder(
@@ -264,11 +328,11 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
               height: 100.0,
               child: Center(
                   child: MenuCardWidget(
-                      title: restaurantDetail.menus.drinks[index].name
+                      title: widget.restaurantDetail.menu.drinks[index].name
                           .toString())),
             );
           },
-          itemCount: restaurantDetail.menus.drinks.length,
+          itemCount: widget.restaurantDetail.menu.drinks.length,
         ),
       ],
     );

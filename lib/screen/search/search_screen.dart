@@ -3,6 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/provider/search/body_of_search_screen.dart';
 import 'package:restaurant_app/provider/search/restaurant_search_provider.dart';
+import 'package:restaurant_app/provider/search/search_provider.dart';
 import 'package:restaurant_app/static/restaurant_search_result_state.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -87,21 +88,5 @@ class _SearchScreenState extends State<SearchScreen> {
         ],
       ),
     );
-  }
-}
-
-class SearchProvider extends ChangeNotifier {
-  bool _isSearching = false;
-  final TextEditingController _searchController = TextEditingController();
-
-  bool get isSearching => _isSearching;
-  TextEditingController get searchController => _searchController;
-
-  void switchIcon() {
-    _isSearching = !_isSearching;
-    if (!_isSearching) {
-      _searchController.clear();
-    }
-    notifyListeners();
   }
 }

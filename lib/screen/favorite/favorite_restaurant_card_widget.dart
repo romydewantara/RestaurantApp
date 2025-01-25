@@ -1,54 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
 
-class RestaurantCard extends StatelessWidget {
+class FavoriteRestaurantCardWidget extends StatelessWidget {
   final Restaurant restaurant;
   final Function() onTap;
 
-  const RestaurantCard({
+  const FavoriteRestaurantCardWidget({
     super.key,
     required this.restaurant,
-    required this.onTap
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            border: Border.all(color: Colors.black)),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 6,
-            horizontal: 8,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxHeight: 90,
-                  minHeight: 90,
-                  maxWidth: 120,
-                  minWidth: 120,
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Hero(
-                    tag: restaurant.pictureId,
-                    child: Image.network(
-                      'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
-                      fit: BoxFit.cover,
-                    ),
+      child: Card(
+        margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        elevation: 4,
+        child: Row(
+          children: [
+            // Restaurant Image
+            ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxHeight: 90,
+                minHeight: 90,
+                maxWidth: 120,
+                minWidth: 120,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Hero(
+                  tag: restaurant.pictureId,
+                  child: Image.network(
+                    'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
-              const SizedBox.square(
-                dimension: 14,
-              ),
-              Expanded(
+            ),
+            // Details Section
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -97,8 +92,8 @@ class RestaurantCard extends StatelessWidget {
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

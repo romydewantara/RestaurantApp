@@ -33,12 +33,12 @@ class _ReviewScreenState extends State<ReviewScreen> {
                 builder: (context, value, child) {
                   return switch (value.resultState) {
                     RestaurantReviewLoadingState() => Center(
-                      child: SizedBox(
-                        height: 80,
-                        width: 80,
-                        child: Lottie.asset("assets/loading.json"),
+                        child: SizedBox(
+                          height: 80,
+                          width: 80,
+                          child: Lottie.asset("assets/loading.json"),
+                        ),
                       ),
-                    ),
                     RestaurantReviewLoadedState(data: var customerReview) =>
                       SizedBox(
                         height: 125,
@@ -49,7 +49,8 @@ class _ReviewScreenState extends State<ReviewScreen> {
                           itemBuilder: (context, index) {
                             List<Review> reversedReview = [];
                             for (int i = customerReview.length - 1;
-                            i >= 0; i--) {
+                                i >= 0;
+                                i--) {
                               reversedReview.add(customerReview[i]);
                             }
                             return ReviewCardWidget(
@@ -110,10 +111,10 @@ class _ReviewScreenState extends State<ReviewScreen> {
                     Text(
                       'Write a review',
                       style:
-                      Theme.of(context).textTheme.headlineLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.teal,
-                      ),
+                          Theme.of(context).textTheme.headlineLarge?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.teal,
+                              ),
                     ),
                     Text(
                       'Please insert your name and fill the review',
@@ -176,25 +177,31 @@ class _ReviewScreenState extends State<ReviewScreen> {
                           onPressed: () {
                             if (value.controllerName.text.isEmpty) {
                               Provider.of<ReviewProvider>(context,
-                                  listen: false).updateErrorTextName();
+                                      listen: false)
+                                  .updateErrorTextName();
                               return;
                             }
 
                             if (value.controllerReview.text.isEmpty) {
                               Provider.of<ReviewProvider>(context,
-                                  listen: false).updateErrorTextReview();
+                                      listen: false)
+                                  .updateErrorTextReview();
                               return;
                             }
 
                             Future.microtask(() {
-                              context.read<RestaurantReviewProvider>()
-                                  .writeRestaurantReview(widget.restaurantId,
-                                  value.fieldName!, value.fieldReview!);
+                              context
+                                    .read<RestaurantReviewProvider>()
+                                    .writeRestaurantReview(
+                                      widget.restaurantId,
+                                      value.fieldName!,
+                                      value.fieldReview!,
+                                    );
                               },
                             );
                             Provider.of<ReviewProvider>(context, listen: false)
                                 .reset();
-                            },
+                          },
                           style: ElevatedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(
                               vertical: 16.0,

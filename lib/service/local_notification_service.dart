@@ -8,16 +8,15 @@ import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 final StreamController<ReceivedNotification> didReceiveLocalNotificationStream =
-StreamController<ReceivedNotification>.broadcast();
+    StreamController<ReceivedNotification>.broadcast();
 
 final StreamController<String?> selectNotificationStream =
-StreamController<String?>.broadcast();
+    StreamController<String?>.broadcast();
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin();
 
 class LocalNotificationService {
-
   final HttpService httpService;
 
   LocalNotificationService(this.httpService);
@@ -97,7 +96,6 @@ class LocalNotificationService {
     String channelId = "2",
     String channelName = "Big Picture Notification",
   }) async {
-
     final String largeIconPath = await httpService.downloadAndSaveFile(
         'https://dummyimage.com/48x48', 'largeIcon');
 
@@ -105,12 +103,12 @@ class LocalNotificationService {
         'https://dummyimage.com/600x200', 'bigPicture.jpg');
 
     final BigPictureStyleInformation bigPictureStyleInformation =
-    BigPictureStyleInformation(FilePathAndroidBitmap(bigPicturePath),
-        hideExpandedLargeIcon: true,
-        contentTitle: 'overridden <b>big</b> content title',
-        htmlFormatContentTitle: true,
-        summaryText: 'summary <i>text</i>',
-        htmlFormatSummaryText: true);
+        BigPictureStyleInformation(FilePathAndroidBitmap(bigPicturePath),
+            hideExpandedLargeIcon: true,
+            contentTitle: 'overridden <b>big</b> content title',
+            htmlFormatContentTitle: true,
+            summaryText: 'summary <i>text</i>',
+            htmlFormatSummaryText: true);
 
     final androidPlatformChannelSpecifics = AndroidNotificationDetails(
       channelId,
@@ -150,7 +148,7 @@ class LocalNotificationService {
   tz.TZDateTime _nextInstanceOfElevenAM() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate =
-    tz.TZDateTime(tz.local, now.year, now.month, now.day, 11);
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, 20, 15);
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
@@ -159,33 +157,33 @@ class LocalNotificationService {
 
   Future<bool> _isAndroidPermissionGranted() async {
     return await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
-        ?.areNotificationsEnabled() ??
+            .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin>()
+            ?.areNotificationsEnabled() ??
         false;
   }
 
   Future<bool> _requestAndroidNotificationsPermission() async {
     return await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestNotificationsPermission() ??
+            .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin>()
+            ?.requestNotificationsPermission() ??
         false;
   }
 
   Future<bool> _requestExactAlarmsPermission() async {
     return await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestExactAlarmsPermission() ??
+            .resolvePlatformSpecificImplementation<
+                AndroidFlutterLocalNotificationsPlugin>()
+            ?.requestExactAlarmsPermission() ??
         false;
   }
 
   Future<bool?> requestPermissions() async {
     if (defaultTargetPlatform == TargetPlatform.iOS) {
       final iOSImplementation =
-      flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-          IOSFlutterLocalNotificationsPlugin>();
+          flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>();
       return await iOSImplementation?.requestPermissions(
         alert: true,
         badge: true,
@@ -196,7 +194,7 @@ class LocalNotificationService {
       final requestAlarmEnabled = await _requestExactAlarmsPermission();
       if (!notificationEnabled) {
         final requestNotificationsPermission =
-        await _requestAndroidNotificationsPermission();
+            await _requestAndroidNotificationsPermission();
         return requestNotificationsPermission && requestAlarmEnabled;
       }
       return notificationEnabled && requestAlarmEnabled;
@@ -234,14 +232,14 @@ class LocalNotificationService {
       notificationDetails,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
-      UILocalNotificationDateInterpretation.absoluteTime,
+          UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
     );
   }
 
   Future<List<PendingNotificationRequest>> pendingNotificationRequests() async {
     final List<PendingNotificationRequest> pendingNotificationRequests =
-    await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
     return pendingNotificationRequests;
   }
 

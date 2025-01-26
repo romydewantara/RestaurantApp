@@ -34,29 +34,31 @@ class _SearchScreenState extends State<SearchScreen> {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    value.isSearching ? SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: TextField(
-                        controller: value.searchController,
-                        decoration: InputDecoration(
-                          hintText: 'Write restaurant\'s name…',
-                          border: InputBorder.none,
-                        ),
-                        onChanged: (value) {
-                          Future.microtask(() {
-                            context
-                                .read<RestaurantSearchProvider>()
-                                .searchRestaurant(value);
-                          });
-                          },
-                      ),
-                    ) : Text(
-                      'Search',
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
+                    value.isSearching
+                        ? SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: TextField(
+                              controller: value.searchController,
+                              decoration: InputDecoration(
+                                hintText: 'Write restaurant\'s name…',
+                                border: InputBorder.none,
+                              ),
+                              onChanged: (value) {
+                                Future.microtask(() {
+                                  context
+                                      .read<RestaurantSearchProvider>()
+                                      .searchRestaurant(value);
+                                });
+                              },
+                            ),
+                          )
+                        : Text(
+                            'Search',
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
                     IconButton(
                       icon:
-                      Icon(value.isSearching ? Icons.close : Icons.search),
+                          Icon(value.isSearching ? Icons.close : Icons.search),
                       onPressed: () =>
                           Provider.of<SearchProvider>(context, listen: false)
                               .switchIcon(),
@@ -70,17 +72,17 @@ class _SearchScreenState extends State<SearchScreen> {
             builder: (context, value, child) {
               return switch (value.searchResultState) {
                 RestaurantSearchLoadingState() => Center(
-                  child: SizedBox(
-                    height: 80,
-                    width: 80,
-                    child: Lottie.asset("assets/loading.json"),
+                    child: SizedBox(
+                      height: 80,
+                      width: 80,
+                      child: Lottie.asset("assets/loading.json"),
+                    ),
                   ),
-                ),
                 RestaurantSearchLoadedState(data: var restaurantList) =>
                   BodyOfSearchScreen(restaurantList: restaurantList),
                 RestaurantSearchErrorState(error: var message) => Center(
-                  child: Text(message),
-                ),
+                    child: Text(message),
+                  ),
                 _ => const SizedBox(),
               };
             },

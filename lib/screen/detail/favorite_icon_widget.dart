@@ -13,7 +13,6 @@ class FavoriteIconWidget extends StatefulWidget {
 }
 
 class _FavoriteIconWidget extends State<FavoriteIconWidget> {
-
   @override
   void initState() {
     final localDatabaseProvider = context.read<LocalDatabaseProvider>();
@@ -21,8 +20,8 @@ class _FavoriteIconWidget extends State<FavoriteIconWidget> {
 
     Future.microtask(() async {
       await localDatabaseProvider.loadRestaurantById(widget.restaurant.id);
-      final value = localDatabaseProvider
-          .checkItemFavorite(widget.restaurant.id);
+      final value =
+          localDatabaseProvider.checkItemFavorite(widget.restaurant.id);
 
       favoriteIconProvider.isFavorite = value;
     });

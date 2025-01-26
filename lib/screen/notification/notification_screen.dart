@@ -7,7 +7,6 @@ import 'package:restaurant_app/provider/setting/shared_preferences_provider.dart
 import 'package:restaurant_app/service/local_notification_service.dart';
 
 class NotificationScreen extends StatefulWidget {
-
   const NotificationScreen({super.key});
 
   @override
@@ -15,7 +14,6 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreen extends State<NotificationScreen> {
-
   void _configureSelectNotificationSubject() {
     selectNotificationStream.stream.listen((String? payload) {
       context.read<PayloadProvider>().payload = payload;
@@ -160,7 +158,9 @@ class _NotificationScreen extends State<NotificationScreen> {
   }
 
   Future<void> _scheduleDailyElevenAMNotification() async {
-    context.read<LocalNotificationProvider>().scheduleDailyElevenAMNotification();
+    context
+        .read<LocalNotificationProvider>()
+        .scheduleDailyElevenAMNotification();
   }
 
   Future<void> _checkPendingNotificationRequests() async {
@@ -175,8 +175,8 @@ class _NotificationScreen extends State<NotificationScreen> {
       context: context,
       builder: (BuildContext context) {
         final pendingData = context.select(
-                (LocalNotificationProvider provider) =>
-            provider.pendingNotificationRequests);
+            (LocalNotificationProvider provider) =>
+                provider.pendingNotificationRequests);
         return AlertDialog(
           title: Text(
             '${pendingData.length} pending notification requests',

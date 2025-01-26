@@ -3,7 +3,6 @@ import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/service/restaurant_sqlite_service.dart';
 
 class LocalDatabaseProvider extends ChangeNotifier {
-
   final RestaurantSqliteService _service;
 
   LocalDatabaseProvider(this._service);

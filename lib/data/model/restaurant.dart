@@ -12,7 +12,7 @@ class Restaurant {
     required this.description,
     required this.pictureId,
     required this.city,
-    required this.rating
+    required this.rating,
   });
 
   factory Restaurant.fromJson(Map<String, dynamic> json) {

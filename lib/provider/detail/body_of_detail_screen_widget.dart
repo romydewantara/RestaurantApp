@@ -16,14 +16,13 @@ class BodyOfDetailScreenWidget extends StatefulWidget {
   const BodyOfDetailScreenWidget({super.key, required this.restaurantDetail});
 
   @override
-  State<BodyOfDetailScreenWidget> createState() => _BodyOfDetailScreenWidgetState();
+  State<BodyOfDetailScreenWidget> createState() =>
+      _BodyOfDetailScreenWidgetState();
 }
 
 class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
-
   @override
   void initState() {
-
     super.initState();
     Future.microtask(() {
       context.read<RestaurantListProvider>().fetchRestaurantList();
@@ -75,7 +74,7 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
                       minWidth: 30,
                       maxWidth: 30,
                       minHeight: 30,
-                      maxHeight: 30
+                      maxHeight: 30,
                     ),
                     child: Container(
                       decoration: BoxDecoration(
@@ -314,9 +313,11 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
               width: 100.0,
               height: 100.0,
               child: Center(
-                  child: MenuCardWidget(
-                      title:
-                          widget.restaurantDetail.menu.foods[index].name.toString())),
+                child: MenuCardWidget(
+                  title:
+                  widget.restaurantDetail.menu.foods[index].name.toString(),
+                ),
+              ),
             );
           },
           itemCount: widget.restaurantDetail.menu.foods.length,
@@ -328,9 +329,11 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
               width: 100.0,
               height: 100.0,
               child: Center(
-                  child: MenuCardWidget(
-                      title: widget.restaurantDetail.menu.drinks[index].name
-                          .toString())),
+                child: MenuCardWidget(
+                  title: widget.restaurantDetail.menu.drinks[index].name
+                      .toString(),
+                ),
+              ),
             );
           },
           itemCount: widget.restaurantDetail.menu.drinks.length,

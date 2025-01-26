@@ -11,7 +11,6 @@ import 'package:restaurant_app/utils/notification_state.dart';
 import 'package:restaurant_app/utils/theme_state.dart';
 
 class SettingScreen extends StatefulWidget {
-
   const SettingScreen({super.key});
 
   @override
@@ -218,8 +217,8 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                           const SizedBox.square(dimension: 4.0),
                           Icon(
-                            size: 16.0,
-                            Icons.info_outline_rounded,
+                            size: 18.0,
+                            Icons.warning_amber_rounded,
                             color: getColor(
                               stateValue.setting!.isDarkMode,
                               'text',
@@ -263,19 +262,17 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   void updateTheme(bool isDarkMode) {
-    final sharedPreferencesProvider =
-    context.read<SharedPreferencesProvider>();
+    final sharedPreferencesProvider = context.read<SharedPreferencesProvider>();
     sharedPreferencesProvider.updateDarkMode(isDarkMode);
   }
 
   void updateNotification(BuildContext context, bool isEnable) async {
-    debugPrint('isEnable: $isEnable');
     if (isEnable) {
       _scheduleDailyElevenAMNotification();
     } else {
-      final localNotificationProvider = context.read<LocalNotificationProvider>();
+      final localNotificationProvider =
+          context.read<LocalNotificationProvider>();
       await localNotificationProvider.checkPendingNotificationRequests(context);
-      debugPrint('mounted: ${!mounted}');
       if (!mounted) {
         return;
       }
@@ -284,11 +281,11 @@ class _SettingScreenState extends State<SettingScreen> {
       if (pendingData.isNotEmpty) {
         final item = pendingData[0];
         await localNotificationProvider.cancelNotification(item.id);
-        await localNotificationProvider.checkPendingNotificationRequests(context);
+        await localNotificationProvider
+            .checkPendingNotificationRequests(context);
       }
     }
-    final sharedPreferencesProvider =
-    context.read<SharedPreferencesProvider>();
+    final sharedPreferencesProvider = context.read<SharedPreferencesProvider>();
     sharedPreferencesProvider.updateEnable(isEnable);
   }
 
@@ -302,9 +299,9 @@ class _SettingScreenState extends State<SettingScreen> {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        final pendingData = context
-            .select((LocalNotificationProvider provider) =>
-            provider.pendingNotificationRequests);
+        final pendingData = context.select(
+            (LocalNotificationProvider provider) =>
+                provider.pendingNotificationRequests);
         return AlertDialog(
           title: Text(
             'Notification Request',
@@ -354,8 +351,9 @@ class _SettingScreenState extends State<SettingScreen> {
       case 'mid':
         return isDarkMode ? Colors.black87 : Colors.teal.shade50;
       case 'bottom':
-        return isDarkMode ? Colors.white.withOpacity(0.3) :
-        Colors.teal.withOpacity(0.3);
+        return isDarkMode
+            ? Colors.white.withOpacity(0.3)
+            : Colors.teal.withOpacity(0.3);
       default:
         return isDarkMode ? Colors.white : Colors.black87;
     }
@@ -374,6 +372,8 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   Future<void> _scheduleDailyElevenAMNotification() async {
-    context.read<LocalNotificationProvider>().scheduleDailyElevenAMNotification();
+    context
+        .read<LocalNotificationProvider>()
+        .scheduleDailyElevenAMNotification();
   }
 }

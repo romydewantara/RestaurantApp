@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/model/restaurant.dart';
 
-class RestaurantCard extends StatelessWidget {
+class RestaurantCardWidget extends StatelessWidget {
   final Restaurant restaurant;
   final Function() onTap;
 
-  const RestaurantCard({
+  const RestaurantCardWidget({
     super.key,
     required this.restaurant,
-    required this.onTap
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(color: Colors.black),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
         ),
+        elevation: 4,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             vertical: 6,

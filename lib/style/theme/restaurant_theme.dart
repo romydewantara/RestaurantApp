@@ -14,7 +14,7 @@ class RestaurantTheme {
         backgroundColor: Colors.white,
         selectedItemColor: Color(0xFF0c4160),
         unselectedItemColor: Colors.grey,
-      )
+      ),
     );
   }
 
@@ -29,7 +29,7 @@ class RestaurantTheme {
         backgroundColor: Colors.black,
         selectedItemColor: Colors.teal,
         unselectedItemColor: Colors.grey,
-      )
+      ),
     );
   }
 

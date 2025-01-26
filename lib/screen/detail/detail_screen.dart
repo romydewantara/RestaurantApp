@@ -36,17 +36,17 @@ class _DetailScreen extends State<DetailScreen> {
         builder: (context, value, child) {
           return switch (value.resultState) {
             RestaurantDetailLoadingState() => Center(
-              child: SizedBox(
-                height: 80,
-                width: 80,
-                child: Lottie.asset("assets/loading.json"),
+                child: SizedBox(
+                  height: 80,
+                  width: 80,
+                  child: Lottie.asset("assets/loading.json"),
+                ),
               ),
-            ),
             RestaurantDetailLoadedState(data: var restaurantDetail) =>
               BodyOfDetailScreenWidget(restaurantDetail: restaurantDetail),
             RestaurantDetailErrorState(error: var message) => Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
                       height: 60,

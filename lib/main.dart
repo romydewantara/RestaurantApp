@@ -26,12 +26,11 @@ import 'package:restaurant_app/style/theme/restaurant_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   final sharedPreferences = await SharedPreferences.getInstance();
 
   final notificationAppLaunchDetails =
-  await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
   String route = NavigationRoute.mainRoute.name;
   String? payload;
@@ -134,8 +133,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sharedPreferenceProvider =
-    context.watch<SharedPreferencesProvider>();
+    final sharedPreferenceProvider = context.watch<SharedPreferencesProvider>();
     sharedPreferenceProvider.getSettingValue();
 
     return MaterialApp(
@@ -147,11 +145,9 @@ class MyApp extends StatelessWidget {
       routes: {
         NavigationRoute.mainRoute.name: (context) => const MainScreen(),
         NavigationRoute.detailRoute.name: (context) => DetailScreen(
-            restaurantId: ModalRoute.of(context)?.settings.arguments as String
-        ),
+            restaurantId: ModalRoute.of(context)?.settings.arguments as String),
         NavigationRoute.reviewRoute.name: (context) => ReviewScreen(
-            restaurantId: ModalRoute.of(context)?.settings.arguments as String
-        ),
+            restaurantId: ModalRoute.of(context)?.settings.arguments as String),
       },
     );
   }

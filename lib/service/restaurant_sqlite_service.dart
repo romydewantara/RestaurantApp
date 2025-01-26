@@ -65,7 +65,7 @@ class RestaurantSqliteService {
     final data = restaurant.toJson();
 
     final result =
-    await db.update(_tableName, data, where: "id = ?", whereArgs: [id]);
+        await db.update(_tableName, data, where: "id = ?", whereArgs: [id]);
     return result;
   }
 
@@ -73,7 +73,7 @@ class RestaurantSqliteService {
     final db = await _initDb();
 
     final result =
-    await db.delete(_tableName, where: "id = ?", whereArgs: [id]);
+        await db.delete(_tableName, where: "id = ?", whereArgs: [id]);
     return result;
   }
 }

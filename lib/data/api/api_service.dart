@@ -9,7 +9,6 @@ class ApiService {
   static const String _baseUrl = "https://restaurant-api.dicoding.dev";
 
   Future<RestaurantListResponse> getRestaurantList() async {
-
     try {
       final response = await http.get(Uri.parse("$_baseUrl/list"));
 
@@ -37,7 +36,6 @@ class ApiService {
   }
 
   Future<RestaurantDetailResponse> getRestaurantDetail(String id) async {
-
     try {
       final response = await http.get(Uri.parse("$_baseUrl/detail/$id"));
 
@@ -65,7 +63,6 @@ class ApiService {
   }
 
   Future<RestaurantSearchResponse> searchRestaurant(String query) async {
-
     try {
       final response = await http.get(Uri.parse("$_baseUrl/search?q=$query"));
 

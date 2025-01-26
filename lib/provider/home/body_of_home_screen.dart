@@ -35,8 +35,12 @@ class BodyOfHomeScreen extends StatelessWidget {
             (context, index) {
               final restaurant = restaurantList[index];
 
-              return ListTile(
-                title: RestaurantCard(
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 2.0,
+                  horizontal: 10.0,
+                ),
+                child: RestaurantCardWidget(
                   restaurant: restaurant,
                   onTap: () {
                     Navigator.pushNamed(

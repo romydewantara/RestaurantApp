@@ -3,7 +3,6 @@ import 'package:restaurant_app/data/model/setting.dart';
 import 'package:restaurant_app/service/shared_preferences_service.dart';
 
 class SharedPreferencesProvider extends ChangeNotifier {
-
   final SharedPreferencesService _service;
 
   SharedPreferencesProvider(this._service);

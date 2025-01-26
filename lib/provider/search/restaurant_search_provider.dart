@@ -12,6 +12,8 @@ class RestaurantSearchProvider extends ChangeNotifier {
   RestaurantSearchResultState get searchResultState => _searchResultState;
 
   Future<void> searchRestaurant(String query) async {
+    String errorMessage = "Please check your internet connection.";
+
     try {
       _searchResultState = RestaurantSearchLoadingState();
       notifyListeners();
@@ -19,14 +21,14 @@ class RestaurantSearchProvider extends ChangeNotifier {
       final result = await _apiServices.searchRestaurant(query);
 
       if (result.error) {
-        _searchResultState = RestaurantSearchErrorState('Connection failed.');
+        _searchResultState = RestaurantSearchErrorState(errorMessage);
         notifyListeners();
       } else {
         _searchResultState = RestaurantSearchLoadedState(result.restaurants);
         notifyListeners();
       }
     } on Exception catch (e) {
-      _searchResultState = RestaurantSearchErrorState(e.toString());
+      _searchResultState = RestaurantSearchErrorState(errorMessage);
       notifyListeners();
     }
   }

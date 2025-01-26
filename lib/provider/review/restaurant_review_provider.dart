@@ -13,6 +13,7 @@ class RestaurantReviewProvider extends ChangeNotifier {
 
   Future<void> writeRestaurantReview(
       String id, String name, String review) async {
+    String errorMessage = "Please check your internet connection.";
     try {
       _resultState = RestaurantReviewLoadingState();
       notifyListeners();
@@ -20,14 +21,14 @@ class RestaurantReviewProvider extends ChangeNotifier {
       final result = await _apiServices.writeReview(id, name, review);
 
       if (result.error) {
-        _resultState = RestaurantReviewErrorState(result.message);
+        _resultState = RestaurantReviewErrorState(errorMessage);
         notifyListeners();
       } else {
         _resultState = RestaurantReviewLoadedState(result.customerReviews);
         notifyListeners();
       }
     } on Exception catch (e) {
-      _resultState = RestaurantReviewErrorState(e.toString());
+      _resultState = RestaurantReviewErrorState(errorMessage);
       notifyListeners();
     }
   }

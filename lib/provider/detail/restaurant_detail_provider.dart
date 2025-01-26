@@ -12,6 +12,7 @@ class RestaurantDetailProvider extends ChangeNotifier {
   RestaurantDetailResultState get resultState => _resultState;
 
   Future<void> fetchRestaurantDetail(String id) async {
+    String errorMessage = "Please check your internet connection.";
     try {
       _resultState = RestaurantDetailLoadingState();
       notifyListeners();
@@ -19,14 +20,14 @@ class RestaurantDetailProvider extends ChangeNotifier {
       final result = await _apiServices.getRestaurantDetail(id);
 
       if (result.error) {
-        _resultState = RestaurantDetailErrorState(result.message);
+        _resultState = RestaurantDetailErrorState(errorMessage);
         notifyListeners();
       } else {
         _resultState = RestaurantDetailLoadedState(result.restaurantDetail);
         notifyListeners();
       }
     } on Exception catch (e) {
-      _resultState = RestaurantDetailErrorState(e.toString());
+      _resultState = RestaurantDetailErrorState(errorMessage);
       notifyListeners();
     }
   }

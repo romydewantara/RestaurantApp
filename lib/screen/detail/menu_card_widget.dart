@@ -11,30 +11,35 @@ class MenuCardWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.teal,
-            borderRadius: BorderRadius.circular(10.0),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.blueGrey,
-                blurRadius: 0,
-                offset: Offset(0, 0),
-              )
-            ]),
+          color: Colors.teal,
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.blueGrey,
+              blurRadius: 0,
+              offset: Offset(0, 0),
+            )
+          ],
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold))
-                  ]),
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox.square(dimension: 10),
               ConstrainedBox(
                 constraints: const BoxConstraints(

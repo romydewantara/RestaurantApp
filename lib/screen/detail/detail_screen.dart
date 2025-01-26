@@ -36,30 +36,32 @@ class _DetailScreen extends State<DetailScreen> {
         builder: (context, value, child) {
           return switch (value.resultState) {
             RestaurantDetailLoadingState() => Center(
-                child: SizedBox(
-                    height: 80,
-                    width: 80,
-                    child: Lottie.asset("assets/loading.json")),
+              child: SizedBox(
+                height: 80,
+                width: 80,
+                child: Lottie.asset("assets/loading.json"),
               ),
+            ),
             RestaurantDetailLoadedState(data: var restaurantDetail) =>
               BodyOfDetailScreenWidget(restaurantDetail: restaurantDetail),
             RestaurantDetailErrorState(error: var message) => Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                        height: 60,
-                        width: 60,
-                        child: Column(
-                          children: [
-                            ClipRRect(
-                              child: Image.network(
-                                'https://raw.githubusercontent.com/romydewantara/Resources/refs/heads/main/images/Restaurant/error.png',
-                                fit: BoxFit.cover,
-                              ),
+                      height: 60,
+                      width: 60,
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            child: Image.network(
+                              'https://raw.githubusercontent.com/romydewantara/Resources/refs/heads/main/images/Restaurant/error.png',
+                              fit: BoxFit.cover,
                             ),
-                          ],
-                        )),
+                          ),
+                        ],
+                      ),
+                    ),
                     const SizedBox.square(dimension: 10),
                     Text(message),
                   ],

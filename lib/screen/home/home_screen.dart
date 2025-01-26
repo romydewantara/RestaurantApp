@@ -29,16 +29,17 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, value, child) {
           return switch (value.resultState) {
             RestaurantListLoadingState() => Center(
-                child: SizedBox(
-                    height: 80,
-                    width: 80,
-                    child: Lottie.asset("assets/loading.json")),
+              child: SizedBox(
+                height: 80,
+                width: 80,
+                child: Lottie.asset("assets/loading.json"),
               ),
+            ),
             RestaurantListLoadedState(data: var restaurantList) =>
               BodyOfHomeScreen(restaurantList: restaurantList),
             RestaurantListErrorState(error: var message) => Center(
-                child: Text(message),
-              ),
+              child: Text(message),
+            ),
             _ => const SizedBox(),
           };
         },

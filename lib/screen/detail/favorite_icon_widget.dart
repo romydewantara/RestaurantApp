@@ -33,38 +33,37 @@ class _FavoriteIconWidget extends State<FavoriteIconWidget> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        onPressed: () {
-          final localDatabaseProvider = context.read<LocalDatabaseProvider>();
-          final favoriteIconProvider = context.read<FavoriteIconProvider>();
-          final isFavorite = favoriteIconProvider.isFavorite;
+      onPressed: () {
+        final localDatabaseProvider = context.read<LocalDatabaseProvider>();
+        final favoriteIconProvider = context.read<FavoriteIconProvider>();
+        final isFavorite = favoriteIconProvider.isFavorite;
 
-          if (!isFavorite) {
-            localDatabaseProvider.addFavoriteRestaurant(widget.restaurant);
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  '${widget.restaurant.name} is added to favorites',
-                ),
+        if (!isFavorite) {
+          localDatabaseProvider.addFavoriteRestaurant(widget.restaurant);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                '${widget.restaurant.name} is added to favorites',
               ),
-            );
-          } else {
-            localDatabaseProvider
-                .removeRestaurantById(widget.restaurant.id);
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  '${widget.restaurant.name} removed from favorites',
-                ),
+            ),
+          );
+        } else {
+          localDatabaseProvider.removeRestaurantById(widget.restaurant.id);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                '${widget.restaurant.name} removed from favorites',
               ),
-            );
-          }
-          favoriteIconProvider.isFavorite = !isFavorite;
-          localDatabaseProvider.loadFavoriteRestaurants();
-
-        },
-        iconSize: 12.0,
-        icon: context.watch<FavoriteIconProvider>().isFavorite
-            ? Icon(Icons.favorite, color: Colors.red)
-            : Icon(Icons.favorite_border));
+            ),
+          );
+        }
+        favoriteIconProvider.isFavorite = !isFavorite;
+        localDatabaseProvider.loadFavoriteRestaurants();
+      },
+      iconSize: 12.0,
+      icon: context.watch<FavoriteIconProvider>().isFavorite
+          ? Icon(Icons.favorite, color: Colors.red)
+          : Icon(Icons.favorite_border),
+    );
   }
 }

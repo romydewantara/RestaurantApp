@@ -19,19 +19,14 @@ class ApiService {
         switch (response.statusCode) {
           case 400:
             throw Exception('Bad Request: The request was invalid.');
-            break;
           case 401:
             throw Exception('Unauthorized: Check your credentials.');
-            break;
           case 403:
             throw Exception('Forbidden: You don\'t have access.');
-            break;
           case 404:
             throw Exception('Not Found: The resource does not exist.');
-            break;
           case 500:
             throw Exception('Server Error: Please try again later.');
-            break;
           default:
             throw Exception('Failed to load restaurant list');
         }
@@ -52,19 +47,14 @@ class ApiService {
         switch (response.statusCode) {
           case 400:
             throw Exception('Bad Request: The request was invalid.');
-            break;
           case 401:
             throw Exception('Unauthorized: Check your credentials.');
-            break;
           case 403:
             throw Exception('Forbidden: You don\'t have access.');
-            break;
           case 404:
             throw Exception('Not Found: The resource does not exist.');
-            break;
           case 500:
             throw Exception('Server Error: Please try again later.');
-            break;
           default:
             throw Exception('Failed to load restaurant detail');
         }
@@ -85,19 +75,14 @@ class ApiService {
         switch (response.statusCode) {
           case 400:
             throw Exception('Bad Request: The request was invalid.');
-            break;
           case 401:
             throw Exception('Unauthorized: Check your credentials.');
-            break;
           case 403:
             throw Exception('Forbidden: You don\'t have access.');
-            break;
           case 404:
             throw Exception('Not Found: The resource does not exist.');
-            break;
           case 500:
             throw Exception('Server Error: Please try again later.');
-            break;
           default:
             throw Exception('Restaurant not found.');
         }
@@ -129,19 +114,14 @@ class ApiService {
         switch (response.statusCode) {
           case 400:
             throw Exception('Bad Request: The request was invalid.');
-            break;
           case 401:
             throw Exception('Unauthorized: Check your credentials.');
-            break;
           case 403:
             throw Exception('Forbidden: You don\'t have access.');
-            break;
           case 404:
             throw Exception('Not Found: The resource does not exist.');
-            break;
           case 500:
             throw Exception('Server Error: Please try again later.');
-            break;
           default:
             throw Exception('Failed to load reviews.');
         }

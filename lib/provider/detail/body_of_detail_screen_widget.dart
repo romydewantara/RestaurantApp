@@ -135,10 +135,11 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
                             dimension: 4,
                           ),
                           SizedBox(
-                              child: Text(
-                            widget.restaurantDetail.address,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ))
+                            child: Text(
+                              widget.restaurantDetail.address,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          )
                         ],
                       )),
                       SizedBox(
@@ -152,25 +153,27 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
                             dimension: 4,
                           ),
                           SizedBox(
-                              child: Text(
-                            widget.restaurantDetail.city,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ))
+                            child: Text(
+                              widget.restaurantDetail.city,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          )
                         ],
                       )),
                     ],
                   ),
                   Container(
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(18.0)),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.blueGrey,
-                            blurRadius: 1,
-                            offset: Offset(0, 2),
-                          )
-                        ]),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(18.0)),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.blueGrey,
+                          blurRadius: 1,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
                     child: Column(
                       children: [
                         Container(
@@ -341,20 +344,25 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
     String text,
   ) {
     return SliverPersistentHeader(
-        pinned: true,
-        delegate: SliverHeaderDelegate(
-            minHeight: 55,
-            maxHeight: 55,
-            child: Container(
-              color: Color(0xFF0c4160),
-              child: Center(
-                child: Text(text,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold)),
+      pinned: true,
+      delegate: SliverHeaderDelegate(
+        minHeight: 55,
+        maxHeight: 55,
+        child: Container(
+          color: Color(0xFF0c4160),
+          child: Center(
+            child: Text(
+              text,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
               ),
-            )));
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -3,6 +3,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
 import 'package:restaurant_app/provider/review/restaurant_review_provider.dart';
+import 'package:restaurant_app/provider/review/review_provider.dart';
 import 'package:restaurant_app/screen/detail/review_card_widget.dart';
 import 'package:restaurant_app/static/restaurant_review_result_state.dart';
 
@@ -189,8 +190,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
                               return;
                             }
 
-                            Future.microtask(() {
-                              context
+                            Future.microtask(
+                              () {
+                                context
                                     .read<RestaurantReviewProvider>()
                                     .writeRestaurantReview(
                                       widget.restaurantId,
@@ -223,50 +225,5 @@ class _ReviewScreenState extends State<ReviewScreen> {
         ),
       ),
     );
-  }
-}
-
-class ReviewProvider extends ChangeNotifier {
-  final TextEditingController _controllerName = TextEditingController();
-  final TextEditingController _controllerReview = TextEditingController();
-  String? _errorTextName;
-  String? _errorTextReview;
-  String? _name;
-  String? _review;
-
-  TextEditingController get controllerName => _controllerName;
-  TextEditingController get controllerReview => _controllerReview;
-
-  String? get errorTextName => _errorTextName;
-  String? get errorTextReview => _errorTextReview;
-  String? get fieldName => _name;
-  String? get fieldReview => _review;
-
-  void updateFieldName(String value) {
-    _name = value;
-    notifyListeners();
-  }
-
-  void updateFieldReview(String value) {
-    _review = value;
-    notifyListeners();
-  }
-
-  void updateErrorTextName() {
-    _errorTextName = 'This field cannot be empty';
-    notifyListeners();
-  }
-
-  void updateErrorTextReview() {
-    _errorTextReview = 'This field cannot be empty';
-    notifyListeners();
-  }
-
-  void reset() {
-    _errorTextName = null;
-    _errorTextReview = null;
-    _controllerName.clear();
-    _controllerReview.clear();
-    notifyListeners();
   }
 }

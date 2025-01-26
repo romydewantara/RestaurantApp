@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/model/restaurant_detail.dart';
 import 'package:restaurant_app/provider/detail/favorite_icon_provider.dart';
+import 'package:restaurant_app/provider/detail/read_more_provider.dart';
 import 'package:restaurant_app/provider/home/restaurant_list_provider.dart';
 import 'package:restaurant_app/screen/detail/category_card_widget.dart';
 import 'package:restaurant_app/screen/detail/favorite_icon_widget.dart';
@@ -31,6 +32,8 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final isExpanded = context.watch<ReadMoreProvider>().isExpanded;
+
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
@@ -276,14 +279,40 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
               ),
             ),
             const SizedBox.square(dimension: 2),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Text(
-                widget.restaurantDetail.description,
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(
+                    widget.restaurantDetail.description,
+                    maxLines: isExpanded ? null : 4,
+                    overflow:
+                        isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    context.read<ReadMoreProvider>().toggleExpanded();
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                        child: Text(
+                          isExpanded ? "Read Less" : "Read More…",
+                          style: TextStyle(
+                            color: Colors.blueAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             const SizedBox.square(dimension: 4),
             Padding(
@@ -315,7 +344,7 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
               child: Center(
                 child: MenuCardWidget(
                   title:
-                  widget.restaurantDetail.menu.foods[index].name.toString(),
+                      widget.restaurantDetail.menu.foods[index].name.toString(),
                 ),
               ),
             );

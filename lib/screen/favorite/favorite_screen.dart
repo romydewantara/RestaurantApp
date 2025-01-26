@@ -88,10 +88,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                             itemBuilder: (context, index) {
                               final restaurant = restaurantList[index];
                               return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 2.0,
-                                    horizontal: 10.0,
-                                  ),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 2.0,
+                                  horizontal: 10.0,
+                                ),
                                 child: RestaurantCardWidget(
                                   restaurant: restaurant,
                                   onTap: () {

@@ -80,9 +80,21 @@ class RestaurantCardWidget extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.star,
-                          color: Colors.yellowAccent,
+                        Stack(
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: Colors.black.withOpacity(0.3),
+                              size: 22.0,
+                            ),
+                            Positioned(
+                              child: Icon(
+                                Icons.star,
+                                color: Colors.yellowAccent,
+                                size: 20,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox.square(
                           dimension: 4,

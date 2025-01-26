@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
+import 'package:restaurant_app/provider/detail/read_more_provider.dart';
 import 'package:restaurant_app/provider/local_database_provider.dart';
 import 'package:restaurant_app/provider/main/index_nav_provider.dart';
 import 'package:restaurant_app/provider/home/restaurant_list_provider.dart';
@@ -9,6 +10,7 @@ import 'package:restaurant_app/provider/notification/local_notification_provider
 import 'package:restaurant_app/provider/notification/notification_state_provider.dart';
 import 'package:restaurant_app/provider/notification/payload_provider.dart';
 import 'package:restaurant_app/provider/review/restaurant_review_provider.dart';
+import 'package:restaurant_app/provider/review/review_provider.dart';
 import 'package:restaurant_app/provider/search/restaurant_search_provider.dart';
 import 'package:restaurant_app/provider/search/search_provider.dart';
 import 'package:restaurant_app/provider/setting/shared_preferences_provider.dart';
@@ -102,6 +104,9 @@ void main() async {
         create: (context) => RestaurantDetailProvider(
           context.read<ApiService>(),
         ),
+      ),
+      ChangeNotifierProvider(
+          create: (context) => ReadMoreProvider(),
       ),
       ChangeNotifierProvider(
         create: (context) => RestaurantReviewProvider(

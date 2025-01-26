@@ -21,7 +21,8 @@ class _DetailScreen extends State<DetailScreen> {
     super.initState();
 
     Future.microtask(() {
-      context.read<RestaurantDetailProvider>()
+      context
+          .read<RestaurantDetailProvider>()
           .fetchRestaurantDetail(widget.restaurantId);
     });
   }

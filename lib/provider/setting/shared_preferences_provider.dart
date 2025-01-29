@@ -33,7 +33,8 @@ class SharedPreferencesProvider extends ChangeNotifier {
   }
 
   ThemeMode getThemeMode() {
-    return _setting?.isDarkMode == true ? ThemeMode.dark : ThemeMode.light;
+    if (_setting == null) return ThemeMode.light;
+    return _setting!.isDarkMode ? ThemeMode.dark : ThemeMode.light;
   }
 
   Future<void> updateDarkMode(bool isDarkMode) async {

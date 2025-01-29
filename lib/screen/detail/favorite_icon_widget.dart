@@ -32,6 +32,7 @@ class _FavoriteIconWidget extends State<FavoriteIconWidget> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      key: ValueKey('favoriteButton'),
       onPressed: () {
         final localDatabaseProvider = context.read<LocalDatabaseProvider>();
         final favoriteIconProvider = context.read<FavoriteIconProvider>();

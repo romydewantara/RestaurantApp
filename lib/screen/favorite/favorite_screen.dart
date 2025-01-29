@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/data/model/restaurant.dart';
 import 'package:restaurant_app/provider/local_database_provider.dart';
 import 'package:restaurant_app/screen/home/restaurant_card_widget.dart';
 import 'package:restaurant_app/static/navigation_route.dart';
@@ -13,8 +12,6 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-  List<Restaurant> restaurantList = [];
-  List<Restaurant> filteredRestaurants = [];
   final TextEditingController searchController = TextEditingController();
 
   @override
@@ -31,20 +28,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     super.initState();
   }
 
-  void _filterRestaurants(String query) {
-    context.read<LocalDatabaseProvider>().loadRestaurantById(query);
-    final results = restaurantList.where((restaurant) {
-      final name = restaurant.name.toLowerCase();
-      final city = restaurant.city.toLowerCase();
-      return name.contains(query.toLowerCase()) ||
-          city.contains(query.toLowerCase());
-    }).toList();
-
-    setState(() {
-      filteredRestaurants = results;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,17 +36,18 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       ),
       body: Consumer<LocalDatabaseProvider>(
         builder: (context, value, child) {
-          restaurantList = value.restaurantList ?? [];
-          filteredRestaurants = restaurantList;
 
-          return switch (restaurantList.isNotEmpty) {
+          return switch (value.restaurantList!.isNotEmpty) {
             true => Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: TextField(
                       controller: searchController,
-                      onChanged: _filterRestaurants,
+                      onChanged: (value) {
+                        Provider.of<LocalDatabaseProvider>(context, listen: false)
+                            .searchRestaurants(value);
+                      },
                       decoration: InputDecoration(
                         hintText: 'Search a favorite restaurant…',
                         prefixIcon: Icon(Icons.search),
@@ -75,7 +59,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     ),
                   ),
                   Expanded(
-                    child: filteredRestaurants.isEmpty
+                    child: value.restaurantList!.isEmpty
                         ? Center(
                             child: Text(
                               'Oops… no restaurants found.',
@@ -84,9 +68,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                             ),
                           )
                         : ListView.builder(
-                            itemCount: restaurantList.length,
+                            itemCount: value.restaurantList!.length,
                             itemBuilder: (context, index) {
-                              final restaurant = restaurantList[index];
+                              final restaurant = value.restaurantList![index];
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 2.0,

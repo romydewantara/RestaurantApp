@@ -14,6 +14,7 @@ class RestaurantCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: ValueKey("restaurantCard"),
       onTap: onTap,
       child: Card(
         shape: RoundedRectangleBorder(
@@ -41,8 +42,11 @@ class RestaurantCardWidget extends StatelessWidget {
                     tag: restaurant.pictureId,
                     child: Image.network(
                       'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Icon(Icons.error);
+                      },
                       fit: BoxFit.cover,
-                    ),
+                    )
                   ),
                 ),
               ),

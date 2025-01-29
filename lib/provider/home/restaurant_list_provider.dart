@@ -21,7 +21,6 @@ class RestaurantListProvider extends ChangeNotifier {
 
       final result = await _apiServices.getRestaurantList();
       if (result.error) {
-        errorMessage = "Failed to load Restaurant, try again later.";
         _resultState = RestaurantListErrorState(errorMessage);
         notifyListeners();
       } else {

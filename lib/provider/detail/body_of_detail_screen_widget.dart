@@ -35,6 +35,7 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
     final isExpanded = context.watch<ReadMoreProvider>().isExpanded;
 
     return CustomScrollView(
+      key: ValueKey("detailScreen"),
       slivers: <Widget>[
         SliverAppBar(
           automaticallyImplyLeading: false,
@@ -264,7 +265,8 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
                 itemCount: widget.restaurantDetail.customerReview.length,
                 itemBuilder: (context, index) {
                   return ReviewCardWidget(
-                      review: widget.restaurantDetail.customerReview[index]);
+                    review: widget.restaurantDetail.customerReview[index],
+                  );
                 },
               ),
             ),
@@ -287,8 +289,9 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
                   child: Text(
                     widget.restaurantDetail.description,
                     maxLines: isExpanded ? null : 4,
-                    overflow:
-                        isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+                    overflow: isExpanded
+                        ? TextOverflow.visible
+                        : TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),

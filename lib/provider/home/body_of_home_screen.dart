@@ -13,6 +13,7 @@ class BodyOfHomeScreen extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverAppBar.medium(
+          key: const ValueKey("sliverAppBar"),
           expandedHeight: 115,
           pinned: true,
           title: Column(

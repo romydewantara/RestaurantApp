@@ -10,8 +10,11 @@ class LocalDatabaseProvider extends ChangeNotifier {
   String _message = "";
   String get message => _message;
 
-  List<Restaurant>? _restaurantList;
-  List<Restaurant>? get restaurantList => _restaurantList;
+  List<Restaurant> _restaurantList = [];
+  List<Restaurant> _filteredList = [];
+  String _query = "";
+
+  List<Restaurant>? get restaurantList => _filteredList;
 
   Restaurant? _restaurant;
   Restaurant? get restaurant => _restaurant;
@@ -37,10 +40,11 @@ class LocalDatabaseProvider extends ChangeNotifier {
   Future<void> loadFavoriteRestaurants() async {
     try {
       _restaurantList = await _service.getAllItems();
+      _filteredList = _restaurantList;
       _restaurant = null;
       _message = "All of your data is loaded";
       notifyListeners();
-    } catch (e, stackTrace) {
+    } catch (e) {
       _message = "Failed to load your all data";
       notifyListeners();
     }
@@ -93,5 +97,14 @@ class LocalDatabaseProvider extends ChangeNotifier {
     }
     final isSameRestaurant = _restaurant!.id == id;
     return isSameRestaurant;
+  }
+
+  void searchRestaurants(String query) {
+    _query = query;
+    _filteredList = _restaurantList
+        .where((restaurant) =>
+        restaurant.name.toLowerCase().contains(_query.toLowerCase()))
+        .toList();
+    notifyListeners();
   }
 }

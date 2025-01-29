@@ -34,7 +34,7 @@ void main() async {
   final notificationAppLaunchDetails =
       await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
-  String route = NavigationRoute.mainRoute.name;
+  String route =  NavigationRoute.mainRoute.name ?? '/';
   String? payload;
 
   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
@@ -106,7 +106,7 @@ void main() async {
         ),
       ),
       ChangeNotifierProvider(
-          create: (context) => ReadMoreProvider(),
+        create: (context) => ReadMoreProvider(),
       ),
       ChangeNotifierProvider(
         create: (context) => RestaurantReviewProvider(
@@ -138,21 +138,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sharedPreferenceProvider = context.watch<SharedPreferencesProvider>();
-    sharedPreferenceProvider.getSettingValue();
+    final sharedPreferencesProvider =
+        Provider.of<SharedPreferencesProvider>(context);
+    sharedPreferencesProvider.getSettingValue();
 
     return MaterialApp(
       title: 'RestaurantApp',
       theme: RestaurantTheme.lightTheme,
       darkTheme: RestaurantTheme.darkTheme,
-      themeMode: sharedPreferenceProvider.getThemeMode(),
+      themeMode: sharedPreferencesProvider.getThemeMode(),
       initialRoute: initialRoute,
       routes: {
         NavigationRoute.mainRoute.name: (context) => const MainScreen(),
         NavigationRoute.detailRoute.name: (context) => DetailScreen(
-            restaurantId: ModalRoute.of(context)?.settings.arguments as String),
+            restaurantId: ModalRoute.of(context)?.settings.arguments as String ?? ''),
         NavigationRoute.reviewRoute.name: (context) => ReviewScreen(
-            restaurantId: ModalRoute.of(context)?.settings.arguments as String),
+            restaurantId: ModalRoute.of(context)?.settings.arguments as String ?? ''),
       },
     );
   }

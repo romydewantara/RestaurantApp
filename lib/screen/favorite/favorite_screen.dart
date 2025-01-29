@@ -31,6 +31,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: ValueKey("favoriteScreen"),
       appBar: AppBar(
         title: Text('Favorite Restaurants'),
       ),

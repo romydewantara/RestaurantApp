@@ -63,7 +63,7 @@ class _FavoriteIconWidget extends State<FavoriteIconWidget> {
       iconSize: 12.0,
       icon: context.watch<FavoriteIconProvider>().isFavorite
           ? Icon(Icons.favorite, color: Colors.red)
-          : Icon(Icons.favorite_border),
+          : Icon(Icons.favorite_border, color: Colors.black),
     );
   }
 }

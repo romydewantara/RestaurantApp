@@ -101,7 +101,7 @@ void main() {
   });
 
   testWidgets(
-      "Should load mock Restaurant List, then tap first item of RestaurantCardWidget, open the DetailScreen then tap on the FavoriteButton",
+      "Should load restaurant list first and tap the first item, then mark as Favorite from DetailScreen and check the item marked is already show in Favorite Screen",
       (tester) async {
     String route = NavigationRoute.mainRoute.name;
 
@@ -110,6 +110,10 @@ void main() {
         providers: [
           ChangeNotifierProvider<SharedPreferencesProvider>.value(
             value: mockSharedPreferencesProvider,
+          ),
+          ChangeNotifierProvider(
+            create: (context) => IndexNavProvider(),
+            //child: const MyApp(),
           ),
           ChangeNotifierProvider<IndexNavProvider>(
             create: (context) => IndexNavProvider(),
@@ -160,14 +164,24 @@ void main() {
     await actionRobot.observeWidgetSliverAppBar(findsOneWidget);
     await actionRobot.tapFirstRestaurantCard();
 
-    // pump and wait until screen stable
-    await tester.pumpAndSettle();
-
     // Detail Screen
     await actionRobot.checkResultScreen(findsOneWidget);
     await actionRobot.tapFavoriteButton();
 
-    await tester.pumpAndSettle();
+    // Tap the back button
+    await actionRobot.tapBackButton();
+
+    // Tap favorite in Bottom Navigation Bar
+    await actionRobot.tapFavoriteNavBar();
+
+    // Check Favorite Screen
+    await actionRobot.checkFavoriteScreen(findsOneWidget);
+
+    // Tap first item of the dummy restaurant list
+    await actionRobot.tapFirstRestaurantCard();
+
+    // Check actual final restaurant name in widget is match with first item restaurant name in dummy list
+    await actionRobot.checkTextRestaurantName("Melting Pot");
 
   });
 }

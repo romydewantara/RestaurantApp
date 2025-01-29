@@ -32,6 +32,13 @@ class _DetailScreen extends State<DetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Restaurant Detail'),
+        leading: IconButton(
+          key: const ValueKey("backButton"),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Consumer<RestaurantDetailProvider>(
         builder: (context, value, child) {
@@ -49,21 +56,21 @@ class _DetailScreen extends State<DetailScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      height: 60,
-                      width: 60,
-                      child: Column(
-                        children: [
-                          ClipRRect(
-                            child: Image.network(
-                              'https://raw.githubusercontent.com/romydewantara/Resources/refs/heads/main/images/Restaurant/error.png',
-                              fit: BoxFit.cover,
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 55,
+                          width: 55,
+                          child: Lottie.asset(
+                            "assets/error_anim.json",
+                            fit: BoxFit.cover,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    const SizedBox.square(dimension: 10),
+                    SizedBox(height: 25, width: 25),
                     Text(message),
                   ],
                 ),

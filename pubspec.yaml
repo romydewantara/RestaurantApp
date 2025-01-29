@@ -45,6 +45,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/loading.json
+    - assets/error_anim.json
     - assets/icon/app_icon.png
   uses-material-design: true
 

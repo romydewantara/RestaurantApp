@@ -38,7 +38,27 @@ class _HomeScreenState extends State<HomeScreen> {
             RestaurantListLoadedState(data: var restaurantList) =>
               BodyOfHomeScreen(restaurantList: restaurantList),
             RestaurantListErrorState(error: var message) => Center(
-                child: Text(message),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 55,
+                          width: 55,
+                          child: Lottie.asset(
+                            "assets/error_anim.json",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 25, width: 25),
+                    Text(message),
+                  ],
+                ),
               ),
             _ => const SizedBox(),
           };

@@ -58,6 +58,7 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
               children: [
                 Flexible(
                   child: Text(
+                    key: ValueKey("textRestaurantName"),
                     widget.restaurantDetail.name,
                     style: TextStyle(
                       fontSize: 22,

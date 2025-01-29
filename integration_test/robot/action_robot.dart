@@ -10,6 +10,10 @@ class ActionRobot {
   final restaurantCardKey = const ValueKey("restaurantCard");
   final detailScreenKey = const ValueKey("detailScreen");
   final favoriteButtonKey = const ValueKey("favoriteButton");
+  final backButtonKey = const ValueKey("backButton");
+  final favoriteNavBarItemKey = const ValueKey("favoriteNavBarItem");
+  final favoriteScreenKey = const ValueKey("favoriteScreen");
+  final textRestaurantNameKey = const ValueKey("textRestaurantName");
   final tapKey = const ValueKey("tap");
 
   Future<void> loadUI(Widget widget) async {
@@ -18,26 +22,50 @@ class ActionRobot {
 
   Future<void> observeWidgetSliverAppBar(Matcher sliverAppBar) async {
     final resultWidget = find.byKey(sliverAppBarKey);
-    debugPrint('sliverAppBar: $resultWidget');
     expect(resultWidget, sliverAppBar);
   }
 
   Future<void> tapFirstRestaurantCard() async {
     final firstRestaurantCardFinder = find.byKey(restaurantCardKey).first;
-    debugPrint('firstRestaurant: $firstRestaurantCardFinder');
     await tester.tap(firstRestaurantCardFinder);
+    await tester.pumpAndSettle();
   }
 
   Future<void> checkResultScreen(Matcher screen) async {
     final resultFinder = find.byKey(detailScreenKey);
-    debugPrint('resultFinder: $resultFinder | res: $screen');
     expect(resultFinder, screen);
   }
 
   Future<void> tapFavoriteButton() async {
     final favoriteButtonFinder = find.byKey(favoriteButtonKey);
-    debugPrint('favButton: $favoriteButtonFinder');
     await tester.tap(favoriteButtonFinder);
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> tapBackButton() async {
+    final backButtonFinder = find.byKey(backButtonKey);
+    await tester.tap(backButtonFinder);
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> tapFavoriteNavBar() async {
+    final favoriteNavBarItemFinder = find.byKey(favoriteNavBarItemKey);
+    await tester.tap(favoriteNavBarItemFinder);
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> checkFavoriteScreen(Matcher screen) async {
+    final resultFinder = find.byKey(favoriteScreenKey);
+    expect(resultFinder, screen);
+  }
+
+  Future<void> checkTextRestaurantName(String text) async {
+    final restaurantNameFinder = find.byKey(textRestaurantNameKey);
+
+    expect(restaurantNameFinder, findsOneWidget);
+
+    final Text restaurantNameWidget = tester.widget<Text>(restaurantNameFinder);
+    expect(restaurantNameWidget.data, text); // final result is 'Melting Pot'
   }
 
 }

@@ -39,6 +39,7 @@ class MainScreen extends StatelessWidget {
             tooltip: "Search",
           ),
           BottomNavigationBarItem(
+            key: ValueKey("favoriteNavBarItem"),
             icon: Icon(Icons.favorite),
             label: "Favorite",
             tooltip: "Favorite",

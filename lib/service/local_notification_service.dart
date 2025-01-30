@@ -29,17 +29,6 @@ class LocalNotificationService {
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
-      /*onDidReceiveLocalNotification:
-          (int id, String? title, String? body, String? payload) async {
-        didReceiveLocalNotificationStream.add(
-          ReceivedNotification(
-            id: id,
-            title: title,
-            body: body,
-            payload: payload,
-          ),
-        );
-      },*/
     );
     final initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
@@ -69,6 +58,7 @@ class LocalNotificationService {
       channelName,
       importance: Importance.max,
       priority: Priority.high,
+      largeIcon: DrawableResourceAndroidBitmap('app_icon'),
       sound: const RawResourceAndroidNotificationSound('slow_spring_board'),
     );
     const iOSPlatformChannelSpecifics = DarwinNotificationDetails(

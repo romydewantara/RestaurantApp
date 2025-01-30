@@ -101,7 +101,7 @@ void main() {
   });
 
   testWidgets(
-      "Should load restaurant list first and tap the first item, then mark as Favorite from DetailScreen and check the item marked is already show in Favorite Screen",
+      "Expected that the restaurant liked will appear on the Favorite list screen and ensure that the restaurant name is match.",
       (tester) async {
     String route = NavigationRoute.mainRoute.name;
 

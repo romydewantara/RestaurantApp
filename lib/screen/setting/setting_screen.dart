@@ -7,6 +7,7 @@ import 'package:restaurant_app/provider/notification/payload_provider.dart';
 import 'package:restaurant_app/provider/setting/shared_preferences_provider.dart';
 import 'package:restaurant_app/provider/theme/theme_state_provider.dart';
 import 'package:restaurant_app/service/local_notification_service.dart';
+import 'package:restaurant_app/service/workmanager_service.dart';
 import 'package:restaurant_app/utils/notification_state.dart';
 import 'package:restaurant_app/utils/theme_state.dart';
 
@@ -21,7 +22,6 @@ class _SettingScreenState extends State<SettingScreen> {
   void _configureSelectNotificationSubject() {
     selectNotificationStream.stream.listen((String? payload) {
       context.read<PayloadProvider>().payload = payload;
-      //Navigator.pushNamed(context, MyRoute.detail.name, arguments: payload);
     });
   }
 
@@ -30,8 +30,6 @@ class _SettingScreenState extends State<SettingScreen> {
         .listen((ReceivedNotification receivedNotification) {
       final payload = receivedNotification.payload;
       context.read<PayloadProvider>().payload = payload;
-      /*Navigator.pushNamed(context, MyRoute.detail.name,
-          arguments: receivedNotification.payload);*/
     });
   }
 
@@ -237,7 +235,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                         ),
                       ),
-                      GestureDetector(
+                      /*GestureDetector(
                         onTap: () {
                           showNotificationRequestDialog();
                         },
@@ -249,7 +247,7 @@ class _SettingScreenState extends State<SettingScreen> {
                             color: Colors.blueAccent,
                           ),
                         ),
-                      ),
+                      ),*/
                     ],
                   ),
                 ),
@@ -266,7 +264,21 @@ class _SettingScreenState extends State<SettingScreen> {
     sharedPreferencesProvider.updateDarkMode(isDarkMode);
   }
 
+  // Custom Daily Reminder using Workmanager
   void updateNotification(BuildContext context, bool isEnable) async {
+    final workManagerService = WorkmanagerService();
+    if (isEnable) {
+      await workManagerService.runPeriodicTask();
+    } else {
+      await workManagerService.cancelAllTask();
+    }
+
+    final sharedPreferencesProvider = context.read<SharedPreferencesProvider>();
+    sharedPreferencesProvider.updateEnable(isEnable);
+  }
+
+  // Daily Reminder (using LocalNotificationService in every 11:00 AM)
+  /*void updateNotification(BuildContext context, bool isEnable) async {
     if (isEnable) {
       _scheduleDailyElevenAMNotification();
     } else {
@@ -342,6 +354,16 @@ class _SettingScreenState extends State<SettingScreen> {
         );
       },
     );
+  }*/
+
+  Future<void> _scheduleDailyElevenAMNotification() async {
+    context
+        .read<LocalNotificationProvider>()
+        .scheduleDailyElevenAMNotification();
+  }
+
+  Future<void> _showBigPictureNotification() async {
+    context.read<LocalNotificationProvider>().showBigPictureNotification();
   }
 
   Color getColor(bool isDarkMode, String widgetType) {
@@ -357,23 +379,5 @@ class _SettingScreenState extends State<SettingScreen> {
       default:
         return isDarkMode ? Colors.white : Colors.black87;
     }
-  }
-
-  Future<void> _requestPermission() async {
-    context.read<LocalNotificationProvider>().requestPermissions();
-  }
-
-  Future<void> _showNotification() async {
-    context.read<LocalNotificationProvider>().showNotification();
-  }
-
-  Future<void> _showBigPictureNotification() async {
-    context.read<LocalNotificationProvider>().showBigPictureNotification();
-  }
-
-  Future<void> _scheduleDailyElevenAMNotification() async {
-    context
-        .read<LocalNotificationProvider>()
-        .scheduleDailyElevenAMNotification();
   }
 }

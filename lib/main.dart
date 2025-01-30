@@ -23,6 +23,7 @@ import 'package:restaurant_app/service/http_service.dart';
 import 'package:restaurant_app/service/local_notification_service.dart';
 import 'package:restaurant_app/service/restaurant_sqlite_service.dart';
 import 'package:restaurant_app/service/shared_preferences_service.dart';
+import 'package:restaurant_app/service/workmanager_service.dart';
 import 'package:restaurant_app/static/navigation_route.dart';
 import 'package:restaurant_app/style/theme/restaurant_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -123,6 +124,9 @@ void main() async {
         create: (context) => LocalDatabaseProvider(
           context.read<RestaurantSqliteService>(),
         ),
+      ),
+      Provider(
+        create: (context) => WorkmanagerService()..init(),
       ),
     ],
     child: MyApp(

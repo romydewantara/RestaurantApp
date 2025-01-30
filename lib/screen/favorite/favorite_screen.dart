@@ -37,7 +37,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       ),
       body: Consumer<LocalDatabaseProvider>(
         builder: (context, value, child) {
-
           return switch (value.restaurantList!.isNotEmpty) {
             true => Column(
                 children: [
@@ -46,7 +45,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     child: TextField(
                       controller: searchController,
                       onChanged: (value) {
-                        Provider.of<LocalDatabaseProvider>(context, listen: false)
+                        Provider.of<LocalDatabaseProvider>(context,
+                                listen: false)
                             .searchRestaurants(value);
                       },
                       decoration: InputDecoration(

@@ -46,7 +46,7 @@ class RestaurantCardWidget extends StatelessWidget {
                         return const Icon(Icons.error);
                       },
                       fit: BoxFit.cover,
-                    )
+                    ),
                   ),
                 ),
               ),

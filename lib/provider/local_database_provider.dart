@@ -103,7 +103,7 @@ class LocalDatabaseProvider extends ChangeNotifier {
     _query = query;
     _filteredList = _restaurantList
         .where((restaurant) =>
-        restaurant.name.toLowerCase().contains(_query.toLowerCase()))
+            restaurant.name.toLowerCase().contains(_query.toLowerCase()))
         .toList();
     notifyListeners();
   }

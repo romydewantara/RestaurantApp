@@ -35,7 +35,7 @@ void main() async {
   final notificationAppLaunchDetails =
       await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
-  String route =  NavigationRoute.mainRoute.name ?? '/';
+  String route = NavigationRoute.mainRoute.name ?? '/';
   String? payload;
 
   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
@@ -155,9 +155,11 @@ class MyApp extends StatelessWidget {
       routes: {
         NavigationRoute.mainRoute.name: (context) => const MainScreen(),
         NavigationRoute.detailRoute.name: (context) => DetailScreen(
-            restaurantId: ModalRoute.of(context)?.settings.arguments as String ?? ''),
+            restaurantId:
+                ModalRoute.of(context)?.settings.arguments as String ?? ''),
         NavigationRoute.reviewRoute.name: (context) => ReviewScreen(
-            restaurantId: ModalRoute.of(context)?.settings.arguments as String ?? ''),
+            restaurantId:
+                ModalRoute.of(context)?.settings.arguments as String ?? ''),
       },
     );
   }

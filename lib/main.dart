@@ -27,9 +27,13 @@ import 'package:restaurant_app/service/workmanager_service.dart';
 import 'package:restaurant_app/static/navigation_route.dart';
 import 'package:restaurant_app/style/theme/restaurant_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:workmanager/workmanager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Workmanager().initialize(callbackDispatcher);
+
   final sharedPreferences = await SharedPreferences.getInstance();
 
   final notificationAppLaunchDetails =
@@ -57,6 +61,9 @@ void main() async {
       ),
       Provider(
         create: (context) => HttpService(),
+      ),
+      Provider(
+        create: (context) => WorkmanagerService()..initialize(),
       ),
       Provider(
         create: (context) => LocalNotificationService(
@@ -124,9 +131,6 @@ void main() async {
         create: (context) => LocalDatabaseProvider(
           context.read<RestaurantSqliteService>(),
         ),
-      ),
-      Provider(
-        create: (context) => WorkmanagerService()..init(),
       ),
     ],
     child: MyApp(

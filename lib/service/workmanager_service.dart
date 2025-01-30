@@ -51,7 +51,7 @@ class WorkmanagerService {
   WorkmanagerService([Workmanager? workmanager])
       : _workmanager = workmanager ??= Workmanager();
 
-  Future<void> init() async {
+  Future<void> initialize() async {
     await _workmanager.initialize(callbackDispatcher, isInDebugMode: true);
   }
 

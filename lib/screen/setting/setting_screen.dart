@@ -264,24 +264,14 @@ class _SettingScreenState extends State<SettingScreen> {
     sharedPreferencesProvider.updateDarkMode(isDarkMode);
   }
 
-  // Custom Daily Reminder using Workmanager
+  // Daily Reminder (using LocalNotificationService in every 11:00 AM)
   void updateNotification(BuildContext context, bool isEnable) async {
-    final workManagerService = WorkmanagerService();
+    final workManagerService = WorkmanagerService(); // Custom Daily Reminder using Workmanager
     if (isEnable) {
       await workManagerService.runPeriodicTask();
-    } else {
-      await workManagerService.cancelAllTask();
-    }
-
-    final sharedPreferencesProvider = context.read<SharedPreferencesProvider>();
-    sharedPreferencesProvider.updateEnable(isEnable);
-  }
-
-  // Daily Reminder (using LocalNotificationService in every 11:00 AM)
-  /*void updateNotification(BuildContext context, bool isEnable) async {
-    if (isEnable) {
       _scheduleDailyElevenAMNotification();
     } else {
+      await workManagerService.cancelAllTask();
       final localNotificationProvider =
           context.read<LocalNotificationProvider>();
       await localNotificationProvider.checkPendingNotificationRequests(context);
@@ -354,7 +344,7 @@ class _SettingScreenState extends State<SettingScreen> {
         );
       },
     );
-  }*/
+  }
 
   Future<void> _scheduleDailyElevenAMNotification() async {
     context

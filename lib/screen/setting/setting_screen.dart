@@ -235,7 +235,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                         ),
                       ),
-                      /*GestureDetector(
+                      GestureDetector(
                         onTap: () {
                           showNotificationRequestDialog();
                         },
@@ -247,7 +247,7 @@ class _SettingScreenState extends State<SettingScreen> {
                             color: Colors.blueAccent,
                           ),
                         ),
-                      ),*/
+                      ),
                     ],
                   ),
                 ),

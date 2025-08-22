@@ -25,12 +25,13 @@ dependencies:
   shared_preferences: ^2.3.5
   sqflite: ^2.4.1
   flutter_local_notifications: ^18.0.1
-  flutter_timezone: ^1.0.8
+  flutter_timezone: ^4.1.0
   timezone: ^0.10.0
   workmanager:
     git:
       url: https://github.com/fluttercommunity/flutter_workmanager.git
-      ref: b783000
+      path: workmanager
+      ref: main
 
   test: ^1.25.8
   mocktail: ^1.0.4

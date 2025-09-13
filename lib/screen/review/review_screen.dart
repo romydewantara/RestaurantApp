@@ -20,9 +20,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Review'),
-      ),
+      appBar: AppBar(title: Text('Review')),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24.0),
@@ -34,12 +32,12 @@ class _ReviewScreenState extends State<ReviewScreen> {
                 builder: (context, value, child) {
                   return switch (value.resultState) {
                     RestaurantReviewLoadingState() => Center(
-                        child: SizedBox(
-                          height: 80,
-                          width: 80,
-                          child: Lottie.asset("assets/loading.json"),
-                        ),
+                      child: SizedBox(
+                        height: 80,
+                        width: 80,
+                        child: Lottie.asset("assets/loading.json"),
                       ),
+                    ),
                     RestaurantReviewLoadedState(data: var customerReview) =>
                       SizedBox(
                         height: 125,
@@ -49,9 +47,11 @@ class _ReviewScreenState extends State<ReviewScreen> {
                           itemCount: customerReview.length,
                           itemBuilder: (context, index) {
                             List<Review> reversedReview = [];
-                            for (int i = customerReview.length - 1;
-                                i >= 0;
-                                i--) {
+                            for (
+                              int i = customerReview.length - 1;
+                              i >= 0;
+                              i--
+                            ) {
                               reversedReview.add(customerReview[i]);
                             }
                             return ReviewCardWidget(
@@ -61,69 +61,72 @@ class _ReviewScreenState extends State<ReviewScreen> {
                         ),
                       ),
                     RestaurantReviewErrorState(error: var message) => Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: 55,
-                                  width: 55,
-                                  child: Lottie.asset(
-                                    "assets/error_anim.json",
-                                    fit: BoxFit.cover,
-                                  ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 55,
+                                width: 55,
+                                child: Lottie.asset(
+                                  "assets/error_anim.json",
+                                  fit: BoxFit.cover,
                                 ),
-                              ],
-                            ),
-                            SizedBox(height: 25, width: 25),
-                            Text(message),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 25, width: 25),
+                          Text(message),
+                        ],
                       ),
+                    ),
                     _ => const SizedBox(),
                   };
                 },
               ),
               const SizedBox.square(dimension: 32),
-              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                ConstrainedBox(
-                  constraints: const BoxConstraints(
-                    maxHeight: 52,
-                    minHeight: 52,
-                    maxWidth: 52,
-                    minWidth: 52,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50.0),
-                    child: Image.network(
-                      'https://raw.githubusercontent.com/romydewantara/Resources/refs/heads/main/images/Restaurant/profile.png',
-                      fit: BoxFit.cover,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxHeight: 52,
+                      minHeight: 52,
+                      maxWidth: 52,
+                      minWidth: 52,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50.0),
+                      child: Image.network(
+                        'https://raw.githubusercontent.com/romydewantara/Resources/refs/heads/main/images/Restaurant/profile.png',
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox.square(dimension: 12),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Write a review',
-                      style:
-                          Theme.of(context).textTheme.headlineLarge?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.teal,
-                              ),
-                    ),
-                    Text(
-                      'Please insert your name and fill the review',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ],
-                ),
-              ]),
+                  const SizedBox.square(dimension: 12),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Write a review',
+                        style: Theme.of(context).textTheme.headlineLarge
+                            ?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.teal,
+                            ),
+                      ),
+                      Text(
+                        'Please insert your name and fill the review',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
               const SizedBox.square(dimension: 28),
               Consumer<ReviewProvider>(
                 builder: (context, value, child) {
@@ -145,8 +148,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                           prefixIcon: Icon(Icons.perm_identity),
                         ),
                         onChanged: (value) {
-                          Provider.of<ReviewProvider>(context, listen: false)
-                              .updateFieldName(value);
+                          context.read<ReviewProvider>().updateFieldName(value);
                         },
                         keyboardType: TextInputType.emailAddress,
                       ),
@@ -166,8 +168,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
                           prefixIcon: Icon(Icons.note_alt),
                         ),
                         onChanged: (value) {
-                          Provider.of<ReviewProvider>(context, listen: false)
-                              .updateFieldReview(value);
+                          context.read<ReviewProvider>().updateFieldReview(
+                            value,
+                          );
                         },
                         keyboardType: TextInputType.emailAddress,
                       ),
@@ -177,21 +180,21 @@ class _ReviewScreenState extends State<ReviewScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             if (value.controllerName.text.isEmpty) {
-                              Provider.of<ReviewProvider>(context,
-                                      listen: false)
+                              context
+                                  .read<ReviewProvider>()
                                   .updateErrorTextName();
                               return;
                             }
 
                             if (value.controllerReview.text.isEmpty) {
-                              Provider.of<ReviewProvider>(context,
-                                      listen: false)
+                              context
+                                  .read<ReviewProvider>()
                                   .updateErrorTextReview();
                               return;
                             }
 
-                            Future.microtask(
-                              () {
+                            Future.microtask(() {
+                              if (context.mounted) {
                                 context
                                     .read<RestaurantReviewProvider>()
                                     .writeRestaurantReview(
@@ -199,15 +202,12 @@ class _ReviewScreenState extends State<ReviewScreen> {
                                       value.fieldName!,
                                       value.fieldReview!,
                                     );
-                              },
-                            );
-                            Provider.of<ReviewProvider>(context, listen: false)
-                                .reset();
+                              }
+                            });
+                            context.read<ReviewProvider>().reset();
                           },
                           style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 16.0,
-                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 16.0),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),

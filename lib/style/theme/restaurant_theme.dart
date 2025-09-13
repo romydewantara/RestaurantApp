@@ -54,8 +54,6 @@ class RestaurantTheme {
   }
 
   static AppBarTheme get _appBarTheme {
-    return AppBarTheme(
-      toolbarTextStyle: _textTheme.titleLarge,
-    );
+    return AppBarTheme(toolbarTextStyle: _textTheme.titleLarge);
   }
 }

@@ -8,7 +8,8 @@ import 'package:restaurant_app/provider/home/restaurant_list_provider.dart';
 import 'package:restaurant_app/screen/home/home_screen.dart';
 import 'package:restaurant_app/static/restaurant_list_result_state.dart';
 
-class MockRestaurantListProvider extends Mock implements RestaurantListProvider {}
+class MockRestaurantListProvider extends Mock
+    implements RestaurantListProvider {}
 
 void main() {
   late MockRestaurantListProvider mockProvider;
@@ -29,7 +30,7 @@ void main() {
               pictureId: "14", // mock image id
               city: "Medan",
               rating: 4.2,
-            )
+            ),
           ],
         ),
       ),
@@ -37,23 +38,20 @@ void main() {
   });
 
   group('BodyOfHomeScreen widget tests', () {
-    testWidgets(
-      "displays SliverAppBar",
-          (tester) async {
+    testWidgets("displays SliverAppBar", (tester) async {
+      // Act: Pump the widget into the widget tree
+      await tester.pumpWidget(widget);
 
-        // Act: Pump the widget into the widget tree
-        await tester.pumpWidget(widget);
+      final sliverAppBar = find.byType(SliverAppBar);
 
-        final sliverAppBar = find.byType(SliverAppBar);
-
-        // Assert: Verify key elements in BodyOfHomeScreen
-        expect(sliverAppBar, findsOneWidget); // Check SliverAppBar
-      },
-    );
+      // Assert: Verify key elements in BodyOfHomeScreen
+      expect(sliverAppBar, findsOneWidget); // Check SliverAppBar
+    });
 
     // Happy Path
-    testWidgets("displays restaurant card information correctly",
-            (tester) async {
+    testWidgets("displays restaurant card information correctly", (
+      tester,
+    ) async {
       // Act: Pump the widget into the widget tree
       await tester.pumpWidget(widget);
 
@@ -64,8 +62,9 @@ void main() {
     });
 
     // Unhappy Path
-    testWidgets("display error message when failed to fetch restaurants",
-        (tester) async {
+    testWidgets("display error message when failed to fetch restaurants", (
+      tester,
+    ) async {
       when(() => mockProvider.fetchRestaurantList()).thenAnswer((_) async {});
       when(() => mockProvider.resultState).thenReturn(
         RestaurantListErrorState("Please check your internet connection."),
@@ -83,7 +82,9 @@ void main() {
 
       // Assert: Verify the error message is displayed
       expect(
-          find.text("Please check your internet connection."), findsOneWidget);
+        find.text("Please check your internet connection."),
+        findsOneWidget,
+      );
     });
   });
 }

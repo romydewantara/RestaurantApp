@@ -76,13 +76,10 @@ class ReviewCardWidget extends StatelessWidget {
                     review.review,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
+                    style: TextStyle(color: Colors.white, fontSize: 14),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

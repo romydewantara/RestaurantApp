@@ -20,7 +20,8 @@ class RestaurantListResponse {
       count: json["count"],
       restaurants: json["restaurants"] != null
           ? List<Restaurant>.from(
-              json["restaurants"]!.map((x) => Restaurant.fromJson(x)))
+              json["restaurants"]!.map((x) => Restaurant.fromJson(x)),
+            )
           : <Restaurant>[],
     );
   }

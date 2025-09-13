@@ -22,14 +22,13 @@ class RestaurantListProvider extends ChangeNotifier {
       final result = await _apiServices.getRestaurantList();
       if (result.error) {
         _resultState = RestaurantListErrorState(errorMessage);
-        notifyListeners();
       } else {
         _resultState = RestaurantListLoadedState(result.restaurants);
         _restaurants = result.restaurants;
-        notifyListeners();
       }
-    } on Exception catch (e) {
+    } on Exception {
       _resultState = RestaurantListErrorState(errorMessage);
+    } finally {
       notifyListeners();
     }
   }

@@ -32,29 +32,26 @@ class BodyOfHomeScreen extends StatelessWidget {
           ),
         ),
         SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              final restaurant = restaurantList[index];
+          delegate: SliverChildBuilderDelegate((context, index) {
+            final restaurant = restaurantList[index];
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 2.0,
-                  horizontal: 10.0,
-                ),
-                child: RestaurantCardWidget(
-                  restaurant: restaurant,
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      NavigationRoute.detailRoute.name,
-                      arguments: restaurant.id,
-                    );
-                  },
-                ),
-              );
-            },
-            childCount: restaurantList.length,
-          ),
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 2.0,
+                horizontal: 10.0,
+              ),
+              child: RestaurantCardWidget(
+                restaurant: restaurant,
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    NavigationRoute.detailRoute.name,
+                    arguments: restaurant.id,
+                  );
+                },
+              ),
+            );
+          }, childCount: restaurantList.length),
         ),
       ],
     );

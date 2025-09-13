@@ -67,5 +67,4 @@ class ActionRobot {
     final Text restaurantNameWidget = tester.widget<Text>(restaurantNameFinder);
     expect(restaurantNameWidget.data, text); // final result is 'Melting Pot'
   }
-
 }

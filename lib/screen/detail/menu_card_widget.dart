@@ -18,7 +18,7 @@ class MenuCardWidget extends StatelessWidget {
               color: Colors.blueGrey,
               blurRadius: 0,
               offset: Offset(0, 0),
-            )
+            ),
           ],
         ),
         child: Padding(

@@ -12,21 +12,15 @@ class CategoryCardWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       child: Container(
         decoration: BoxDecoration(
-            color: Color(0xFF0c4160),
-            borderRadius: BorderRadius.circular(6.0),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.white,
-                blurRadius: 0,
-                offset: Offset(0, 2),
-              )
-            ]),
+          color: Color(0xFF0c4160),
+          borderRadius: BorderRadius.circular(6.0),
+          boxShadow: const [
+            BoxShadow(color: Colors.white, blurRadius: 0, offset: Offset(0, 2)),
+          ],
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          child: Text(
-            category.name,
-            style: TextStyle(color: Colors.white),
-          ),
+          child: Text(category.name, style: TextStyle(color: Colors.white)),
         ),
       ),
     );

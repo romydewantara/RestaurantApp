@@ -27,8 +27,8 @@ void callbackDispatcher() {
             "Hello, let's try going to ${randomRestaurant['name']} now!";
         String body =
             "📍 ${randomRestaurant['city']} City - ⭐ ${randomRestaurant['rating']}";
-        String pictureId = randomRestaurant['pictureId'];
-        String imageUrl = "$baseUrl/images/small/$pictureId"; // save to cache
+        //String pictureId = randomRestaurant['pictureId'];
+        //String imageUrl = "$baseUrl/images/small/$pictureId";
 
         int notificationId = Random().nextInt(100000);
 
@@ -49,23 +49,19 @@ class WorkmanagerService {
   final Workmanager _workmanager;
 
   WorkmanagerService([Workmanager? workmanager])
-      : _workmanager = workmanager ??= Workmanager();
+    : _workmanager = workmanager ??= Workmanager();
 
   Future<void> initialize() async {
-    await _workmanager.initialize(callbackDispatcher, isInDebugMode: true);
+    await _workmanager.initialize(callbackDispatcher);
   }
 
   Future<void> runOneOffTask() async {
     await _workmanager.registerOneOffTask(
       RestaurantWorkmanager.oneOff.uniqueName,
       RestaurantWorkmanager.oneOff.taskName,
-      constraints: Constraints(
-        networkType: NetworkType.connected,
-      ),
+      constraints: Constraints(networkType: NetworkType.connected),
       initialDelay: const Duration(seconds: 5),
-      inputData: {
-        "data": "Restaurant data",
-      },
+      inputData: {"data": "Restaurant data"},
     );
   }
 

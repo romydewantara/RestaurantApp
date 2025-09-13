@@ -13,28 +13,25 @@ class BodyOfSearchScreen extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              final restaurant = restaurantList[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 2.0,
-                  horizontal: 10.0,
-                ),
-                child: RestaurantCardWidget(
-                  restaurant: restaurant,
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      NavigationRoute.detailRoute.name,
-                      arguments: restaurant.id,
-                    );
-                  },
-                ),
-              );
-            },
-            childCount: restaurantList.length,
-          ),
+          delegate: SliverChildBuilderDelegate((context, index) {
+            final restaurant = restaurantList[index];
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 2.0,
+                horizontal: 10.0,
+              ),
+              child: RestaurantCardWidget(
+                restaurant: restaurant,
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    NavigationRoute.detailRoute.name,
+                    arguments: restaurant.id,
+                  );
+                },
+              ),
+            );
+          }, childCount: restaurantList.length),
         ),
       ],
     );

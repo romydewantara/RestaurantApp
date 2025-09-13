@@ -87,18 +87,24 @@ class LocalNotificationService {
     String channelName = "Big Picture Notification",
   }) async {
     final String largeIconPath = await httpService.downloadAndSaveFile(
-        'https://dummyimage.com/48x48', 'largeIcon');
+      'https://dummyimage.com/48x48',
+      'largeIcon',
+    );
 
     final String bigPicturePath = await httpService.downloadAndSaveFile(
-        'https://dummyimage.com/600x200', 'bigPicture.jpg');
+      'https://dummyimage.com/600x200',
+      'bigPicture.jpg',
+    );
 
     final BigPictureStyleInformation bigPictureStyleInformation =
-        BigPictureStyleInformation(FilePathAndroidBitmap(bigPicturePath),
-            hideExpandedLargeIcon: true,
-            contentTitle: 'overridden <b>big</b> content title',
-            htmlFormatContentTitle: true,
-            summaryText: 'summary <i>text</i>',
-            htmlFormatSummaryText: true);
+        BigPictureStyleInformation(
+          FilePathAndroidBitmap(bigPicturePath),
+          hideExpandedLargeIcon: true,
+          contentTitle: 'overridden <b>big</b> content title',
+          htmlFormatContentTitle: true,
+          summaryText: 'summary <i>text</i>',
+          htmlFormatSummaryText: true,
+        );
 
     final androidPlatformChannelSpecifics = AndroidNotificationDetails(
       channelId,
@@ -109,12 +115,11 @@ class LocalNotificationService {
       styleInformation: bigPictureStyleInformation,
     );
 
-    final iOSPlatformChannelSpecifics = DarwinNotificationDetails(attachments: [
-      DarwinNotificationAttachment(
-        bigPicturePath,
-        hideThumbnail: false,
-      )
-    ]);
+    final iOSPlatformChannelSpecifics = DarwinNotificationDetails(
+      attachments: [
+        DarwinNotificationAttachment(bigPicturePath, hideThumbnail: false),
+      ],
+    );
 
     final notificationDetails = NotificationDetails(
       android: androidPlatformChannelSpecifics,
@@ -137,8 +142,13 @@ class LocalNotificationService {
 
   tz.TZDateTime _nextInstanceOfElevenAM() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, 14, 29);
+    tz.TZDateTime scheduledDate = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      11,
+    );
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
@@ -148,7 +158,8 @@ class LocalNotificationService {
   Future<bool> _isAndroidPermissionGranted() async {
     return await flutterLocalNotificationsPlugin
             .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin>()
+              AndroidFlutterLocalNotificationsPlugin
+            >()
             ?.areNotificationsEnabled() ??
         false;
   }
@@ -156,7 +167,8 @@ class LocalNotificationService {
   Future<bool> _requestAndroidNotificationsPermission() async {
     return await flutterLocalNotificationsPlugin
             .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin>()
+              AndroidFlutterLocalNotificationsPlugin
+            >()
             ?.requestNotificationsPermission() ??
         false;
   }
@@ -164,16 +176,18 @@ class LocalNotificationService {
   Future<bool> _requestExactAlarmsPermission() async {
     return await flutterLocalNotificationsPlugin
             .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin>()
+              AndroidFlutterLocalNotificationsPlugin
+            >()
             ?.requestExactAlarmsPermission() ??
         false;
   }
 
   Future<bool?> requestPermissions() async {
     if (defaultTargetPlatform == TargetPlatform.iOS) {
-      final iOSImplementation =
-          flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>();
+      final iOSImplementation = flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin
+          >();
       return await iOSImplementation?.requestPermissions(
         alert: true,
         badge: true,

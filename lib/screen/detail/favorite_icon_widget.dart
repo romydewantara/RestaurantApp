@@ -20,8 +20,9 @@ class _FavoriteIconWidget extends State<FavoriteIconWidget> {
 
     Future.microtask(() async {
       await localDatabaseProvider.loadRestaurantById(widget.restaurant.id);
-      final value =
-          localDatabaseProvider.checkItemFavorite(widget.restaurant.id);
+      final value = localDatabaseProvider.checkItemFavorite(
+        widget.restaurant.id,
+      );
 
       favoriteIconProvider.isFavorite = value;
     });
@@ -42,18 +43,14 @@ class _FavoriteIconWidget extends State<FavoriteIconWidget> {
           localDatabaseProvider.addFavoriteRestaurant(widget.restaurant);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                '${widget.restaurant.name} is added to favorites',
-              ),
+              content: Text('${widget.restaurant.name} is added to favorites'),
             ),
           );
         } else {
           localDatabaseProvider.removeRestaurantById(widget.restaurant.id);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                '${widget.restaurant.name} removed from favorites',
-              ),
+              content: Text('${widget.restaurant.name} removed from favorites'),
             ),
           );
         }

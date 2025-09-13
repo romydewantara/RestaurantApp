@@ -22,13 +22,12 @@ class RestaurantSearchProvider extends ChangeNotifier {
 
       if (result.error) {
         _searchResultState = RestaurantSearchErrorState(errorMessage);
-        notifyListeners();
       } else {
         _searchResultState = RestaurantSearchLoadedState(result.restaurants);
-        notifyListeners();
       }
-    } on Exception catch (e) {
+    } on Exception {
       _searchResultState = RestaurantSearchErrorState(errorMessage);
+    } finally {
       notifyListeners();
     }
   }

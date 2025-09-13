@@ -53,8 +53,12 @@ class RestaurantSqliteService {
 
   Future<Restaurant> getItemById(String id) async {
     final db = await _initDb();
-    final results =
-        await db.query(_tableName, where: "id = ?", whereArgs: [id], limit: 1);
+    final results = await db.query(
+      _tableName,
+      where: "id = ?",
+      whereArgs: [id],
+      limit: 1,
+    );
 
     return results.map((result) => Restaurant.fromJson(result)).first;
   }
@@ -64,16 +68,23 @@ class RestaurantSqliteService {
 
     final data = restaurant.toJson();
 
-    final result =
-        await db.update(_tableName, data, where: "id = ?", whereArgs: [id]);
+    final result = await db.update(
+      _tableName,
+      data,
+      where: "id = ?",
+      whereArgs: [id],
+    );
     return result;
   }
 
   Future<int> removeItem(String id) async {
     final db = await _initDb();
 
-    final result =
-        await db.delete(_tableName, where: "id = ?", whereArgs: [id]);
+    final result = await db.delete(
+      _tableName,
+      where: "id = ?",
+      whereArgs: [id],
+    );
     return result;
   }
 }

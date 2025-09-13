@@ -19,7 +19,9 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
 
     Future.microtask(() {
-      context.read<RestaurantSearchProvider>().searchRestaurant("");
+      if (mounted) {
+        context.read<RestaurantSearchProvider>().searchRestaurant("");
+      }
     });
   }
 
@@ -45,9 +47,12 @@ class _SearchScreenState extends State<SearchScreen> {
                               ),
                               onChanged: (value) {
                                 Future.microtask(() {
-                                  context
-                                      .read<RestaurantSearchProvider>()
-                                      .searchRestaurant(value);
+                                  if (context.mounted) {
+                                    context
+                                        .read<RestaurantSearchProvider>()
+                                        .searchRestaurant;
+                                  }
+                                  (value);
                                 });
                               },
                             ),
@@ -57,30 +62,33 @@ class _SearchScreenState extends State<SearchScreen> {
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
                     IconButton(
-                      icon:
-                          Icon(value.isSearching ? Icons.close : Icons.search),
-                      onPressed: () =>
-                          Provider.of<SearchProvider>(context, listen: false)
-                              .switchIcon(),
+                      icon: Icon(
+                        value.isSearching ? Icons.close : Icons.search,
+                      ),
+                      onPressed: () => Provider.of<SearchProvider>(
+                        context,
+                        listen: false,
+                      ).switchIcon(),
                     ),
                   ],
                 );
               },
             ),
           ),
-          Expanded(child: Consumer<RestaurantSearchProvider>(
-            builder: (context, value, child) {
-              return switch (value.searchResultState) {
-                RestaurantSearchLoadingState() => Center(
+          Expanded(
+            child: Consumer<RestaurantSearchProvider>(
+              builder: (context, value, child) {
+                return switch (value.searchResultState) {
+                  RestaurantSearchLoadingState() => Center(
                     child: SizedBox(
                       height: 80,
                       width: 80,
                       child: Lottie.asset("assets/loading.json"),
                     ),
                   ),
-                RestaurantSearchLoadedState(data: var restaurantList) =>
-                  BodyOfSearchScreen(restaurantList: restaurantList),
-                RestaurantSearchErrorState(error: var message) => Center(
+                  RestaurantSearchLoadedState(data: var restaurantList) =>
+                    BodyOfSearchScreen(restaurantList: restaurantList),
+                  RestaurantSearchErrorState(error: var message) => Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -103,10 +111,11 @@ class _SearchScreenState extends State<SearchScreen> {
                       ],
                     ),
                   ),
-                _ => const SizedBox(),
-              };
-            },
-          ))
+                  _ => const SizedBox(),
+                };
+              },
+            ),
+          ),
         ],
       ),
     );

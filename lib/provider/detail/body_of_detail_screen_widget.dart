@@ -26,7 +26,7 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      context.read<RestaurantListProvider>().fetchRestaurantList();
+      if (mounted) context.read<RestaurantListProvider>().fetchRestaurantList();
     });
   }
 
@@ -65,7 +65,7 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
                       color: Colors.white,
                       shadows: [
                         Shadow(
-                          color: Colors.black.withOpacity(0.3),
+                          color: Colors.black.withValues(alpha: 0.3),
                           offset: Offset(40, 40),
                           blurRadius: 70,
                         ),
@@ -116,9 +116,7 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
         ),
         SliverList(
           delegate: SliverChildListDelegate([
-            const SizedBox.square(
-              dimension: 16,
-            ),
+            const SizedBox.square(dimension: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
@@ -129,41 +127,36 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                          child: Row(
-                        children: [
-                          const Icon(
-                            Icons.pin_drop,
-                            color: Colors.redAccent,
-                          ),
-                          const SizedBox.square(
-                            dimension: 4,
-                          ),
-                          SizedBox(
-                            child: Text(
-                              widget.restaurantDetail.address,
-                              style: Theme.of(context).textTheme.titleMedium,
+                        child: Row(
+                          children: [
+                            const Icon(Icons.pin_drop, color: Colors.redAccent),
+                            const SizedBox.square(dimension: 4),
+                            SizedBox(
+                              child: Text(
+                                widget.restaurantDetail.address,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
                             ),
-                          )
-                        ],
-                      )),
+                          ],
+                        ),
+                      ),
                       SizedBox(
-                          child: Row(
-                        children: [
-                          const Icon(
-                            Icons.location_city,
-                            color: Colors.blueAccent,
-                          ),
-                          const SizedBox.square(
-                            dimension: 4,
-                          ),
-                          SizedBox(
-                            child: Text(
-                              widget.restaurantDetail.city,
-                              style: Theme.of(context).textTheme.titleMedium,
+                        child: Row(
+                          children: [
+                            const Icon(
+                              Icons.location_city,
+                              color: Colors.blueAccent,
                             ),
-                          )
-                        ],
-                      )),
+                            const SizedBox.square(dimension: 4),
+                            SizedBox(
+                              child: Text(
+                                widget.restaurantDetail.city,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                   Container(
@@ -186,22 +179,28 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
                                 ? Colors.red
                                 : Colors.green,
                             borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(18),
-                                topRight: Radius.circular(18)),
+                              topLeft: Radius.circular(18),
+                              topRight: Radius.circular(18),
+                            ),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.only(
-                                left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
+                              left: 8.0,
+                              right: 8.0,
+                              top: 4.0,
+                              bottom: 4.0,
+                            ),
                             child: Row(
                               children: [
-                                Text(widget.restaurantDetail.rating.toString(),
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold)),
-                                const SizedBox.square(
-                                  dimension: 4,
+                                Text(
+                                  widget.restaurantDetail.rating.toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
+                                const SizedBox.square(dimension: 4),
                                 const Icon(Icons.star, color: Colors.yellow),
                               ],
                             ),
@@ -209,7 +208,11 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
-                              left: 8.0, right: 8.0, bottom: 6.0, top: 2.0),
+                            left: 8.0,
+                            right: 8.0,
+                            bottom: 6.0,
+                            top: 2.0,
+                          ),
                           child: Text(
                             'Ratings',
                             style: TextStyle(color: Colors.black),
@@ -221,9 +224,7 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
                 ],
               ),
             ),
-            const SizedBox.square(
-              dimension: 12,
-            ),
+            const SizedBox.square(dimension: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Row(
@@ -248,12 +249,10 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         const SizedBox.square(dimension: 4),
-                        Icon(
-                          Icons.note_alt_outlined,
-                        ),
+                        Icon(Icons.note_alt_outlined),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -271,9 +270,7 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
                 },
               ),
             ),
-            const SizedBox.square(
-              dimension: 16,
-            ),
+            const SizedBox.square(dimension: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Text(
@@ -329,14 +326,13 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
                   itemCount: widget.restaurantDetail.categories.length,
                   itemBuilder: (context, index) {
                     return CategoryCardWidget(
-                        category: widget.restaurantDetail.categories[index]);
+                      category: widget.restaurantDetail.categories[index],
+                    );
                   },
                 ),
               ),
             ),
-            const SizedBox.square(
-              dimension: 16,
-            )
+            const SizedBox.square(dimension: 16),
           ]),
         ),
         _header(context, "Foods"),
@@ -347,8 +343,8 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
               height: 100.0,
               child: Center(
                 child: MenuCardWidget(
-                  title:
-                      widget.restaurantDetail.menu.foods[index].name.toString(),
+                  title: widget.restaurantDetail.menu.foods[index].name
+                      .toString(),
                 ),
               ),
             );
@@ -375,10 +371,7 @@ class _BodyOfDetailScreenWidgetState extends State<BodyOfDetailScreenWidget> {
     );
   }
 
-  SliverPersistentHeader _header(
-    BuildContext context,
-    String text,
-  ) {
+  SliverPersistentHeader _header(BuildContext context, String text) {
     return SliverPersistentHeader(
       pinned: true,
       delegate: SliverHeaderDelegate(

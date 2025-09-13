@@ -21,15 +21,16 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   void _configureSelectNotificationSubject() {
     selectNotificationStream.stream.listen((String? payload) {
-      context.read<PayloadProvider>().payload = payload;
+      if (mounted) context.read<PayloadProvider>().payload = payload;
     });
   }
 
   void _configureDidReceiveLocalNotificationSubject() {
-    didReceiveLocalNotificationStream.stream
-        .listen((ReceivedNotification receivedNotification) {
+    didReceiveLocalNotificationStream.stream.listen((
+      ReceivedNotification receivedNotification,
+    ) {
       final payload = receivedNotification.payload;
-      context.read<PayloadProvider>().payload = payload;
+      if (mounted) context.read<PayloadProvider>().payload = payload;
     });
   }
 
@@ -40,7 +41,7 @@ class _SettingScreenState extends State<SettingScreen> {
     _configureDidReceiveLocalNotificationSubject();
 
     Future.microtask(() {
-      context.read<SharedPreferencesProvider>().getSettingValue();
+      if (mounted) context.read<SharedPreferencesProvider>().getSettingValue();
     });
 
     final themeStateProvider = context.read<ThemeStateProvider>();
@@ -68,9 +69,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-      ),
+      appBar: AppBar(title: const Text('Settings')),
       body: Consumer<SharedPreferencesProvider>(
         builder: (context, stateValue, child) {
           return Column(
@@ -92,7 +91,9 @@ class _SettingScreenState extends State<SettingScreen> {
                         boxShadow: [
                           BoxShadow(
                             color: getColor(
-                                stateValue.setting!.isDarkMode, 'bottom'),
+                              stateValue.setting!.isDarkMode,
+                              'bottom',
+                            ),
                             blurRadius: 10,
                             offset: Offset(0, 5),
                           ),
@@ -138,7 +139,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                   onChanged: (value) {
                                     updateTheme(value);
                                   },
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -180,7 +181,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                   onChanged: (value) {
                                     updateNotification(context, value);
                                   },
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -266,27 +267,30 @@ class _SettingScreenState extends State<SettingScreen> {
 
   // Daily Reminder (using LocalNotificationService in every 11:00 AM)
   void updateNotification(BuildContext context, bool isEnable) async {
-    final workManagerService = WorkmanagerService(); // Custom Daily Reminder using Workmanager
+    final workManagerService =
+        WorkmanagerService(); // Custom Daily Reminder using Workmanager
     if (isEnable) {
       await workManagerService.runPeriodicTask();
       _scheduleDailyElevenAMNotification();
     } else {
       await workManagerService.cancelAllTask();
-      final localNotificationProvider =
-          context.read<LocalNotificationProvider>();
+
+      if (!context.mounted) return;
+      final localNotificationProvider = context
+          .read<LocalNotificationProvider>();
       await localNotificationProvider.checkPendingNotificationRequests(context);
-      if (!mounted) {
-        return;
-      }
 
       final pendingData = localNotificationProvider.pendingNotificationRequests;
       if (pendingData.isNotEmpty) {
         final item = pendingData[0];
         await localNotificationProvider.cancelNotification(item.id);
-        await localNotificationProvider
-            .checkPendingNotificationRequests(context);
+        if (!context.mounted) return;
+        await localNotificationProvider.checkPendingNotificationRequests(
+          context,
+        );
       }
     }
+    if (!context.mounted) return;
     final sharedPreferencesProvider = context.read<SharedPreferencesProvider>();
     sharedPreferencesProvider.updateEnable(isEnable);
   }
@@ -302,8 +306,9 @@ class _SettingScreenState extends State<SettingScreen> {
       context: context,
       builder: (BuildContext context) {
         final pendingData = context.select(
-            (LocalNotificationProvider provider) =>
-                provider.pendingNotificationRequests);
+          (LocalNotificationProvider provider) =>
+              provider.pendingNotificationRequests,
+        );
         return AlertDialog(
           title: Text(
             'Notification Request',
@@ -321,9 +326,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   pendingData[0].title!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
                   pendingData[0].body!,
@@ -352,9 +355,9 @@ class _SettingScreenState extends State<SettingScreen> {
         .scheduleDailyElevenAMNotification();
   }
 
-  Future<void> _showBigPictureNotification() async {
+  /*Future<void> _showBigPictureNotification() async {
     context.read<LocalNotificationProvider>().showBigPictureNotification();
-  }
+  }*/
 
   Color getColor(bool isDarkMode, String widgetType) {
     switch (widgetType) {
@@ -364,8 +367,8 @@ class _SettingScreenState extends State<SettingScreen> {
         return isDarkMode ? Colors.black87 : Colors.teal.shade50;
       case 'bottom':
         return isDarkMode
-            ? Colors.white.withOpacity(0.3)
-            : Colors.teal.withOpacity(0.3);
+            ? Colors.white.withValues(alpha: 0.3)
+            : Colors.teal.withValues(alpha: 0.3);
       default:
         return isDarkMode ? Colors.white : Colors.black87;
     }

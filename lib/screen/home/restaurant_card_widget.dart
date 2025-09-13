@@ -17,15 +17,10 @@ class RestaurantCardWidget extends StatelessWidget {
       key: ValueKey("restaurantCard"),
       onTap: onTap,
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         elevation: 4,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 6,
-            horizontal: 8,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -50,9 +45,7 @@ class RestaurantCardWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox.square(
-                dimension: 14,
-              ),
+              const SizedBox.square(dimension: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,9 +56,7 @@ class RestaurantCardWidget extends StatelessWidget {
                       restaurant.name,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    const SizedBox.square(
-                      dimension: 4,
-                    ),
+                    const SizedBox.square(dimension: 4),
                     Row(
                       children: [
                         const Icon(Icons.pin_drop),
@@ -79,16 +70,14 @@ class RestaurantCardWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox.square(
-                      dimension: 12,
-                    ),
+                    const SizedBox.square(dimension: 12),
                     Row(
                       children: [
                         Stack(
                           children: [
                             Icon(
                               Icons.star,
-                              color: Colors.black.withOpacity(0.3),
+                              color: Colors.black.withValues(alpha: 0.3),
                               size: 22.0,
                             ),
                             Positioned(
@@ -100,9 +89,7 @@ class RestaurantCardWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox.square(
-                          dimension: 4,
-                        ),
+                        const SizedBox.square(dimension: 4),
                         Expanded(
                           child: Text(
                             restaurant.rating.toString(),

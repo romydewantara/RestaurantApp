@@ -36,10 +36,10 @@ void main() async {
 
   final sharedPreferences = await SharedPreferences.getInstance();
 
-  final notificationAppLaunchDetails =
-      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  final notificationAppLaunchDetails = await flutterLocalNotificationsPlugin
+      .getNotificationAppLaunchDetails();
 
-  String route = NavigationRoute.mainRoute.name ?? '/';
+  String route = NavigationRoute.mainRoute.name;
   String? payload;
 
   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
@@ -49,94 +49,73 @@ void main() async {
     payload = notificationResponse?.payload;
   }
 
-  runApp(MultiProvider(
-    providers: [
-      Provider(
-        create: (context) => SharedPreferencesService(sharedPreferences),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => SharedPreferencesProvider(
-          context.read<SharedPreferencesService>(),
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider(
+          create: (context) => SharedPreferencesService(sharedPreferences),
         ),
-      ),
-      Provider(
-        create: (context) => HttpService(),
-      ),
-      Provider(
-        create: (context) => WorkmanagerService()..initialize(),
-      ),
-      Provider(
-        create: (context) => LocalNotificationService(
-          context.read<HttpService>(),
-        )
-          ..init()
-          ..configureLocalTimeZone(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => LocalNotificationProvider(
-          context.read<LocalNotificationService>(),
-        )..requestPermissions(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => PayloadProvider(
-          payload: payload,
+        ChangeNotifierProvider(
+          create: (context) => SharedPreferencesProvider(
+            context.read<SharedPreferencesService>(),
+          ),
         ),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => IndexNavProvider(),
-        //child: const MyApp(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => NotificationStateProvider(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ThemeStateProvider(),
-      ),
-      Provider(
-        create: (context) => ApiService(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => SearchProvider(),
-        child: SearchScreen(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) =>
-            RestaurantSearchProvider(context.read<ApiService>()),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => RestaurantListProvider(
-          context.read<ApiService>(),
+        Provider(create: (context) => HttpService()),
+        Provider(create: (context) => WorkmanagerService()..initialize()),
+        Provider(
+          create: (context) =>
+              LocalNotificationService(context.read<HttpService>())
+                ..init()
+                ..configureLocalTimeZone(),
         ),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => RestaurantDetailProvider(
-          context.read<ApiService>(),
+        ChangeNotifierProvider(
+          create: (context) => LocalNotificationProvider(
+            context.read<LocalNotificationService>(),
+          )..requestPermissions(),
         ),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ReadMoreProvider(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => RestaurantReviewProvider(
-          context.read<ApiService>(),
+        ChangeNotifierProvider(
+          create: (context) => PayloadProvider(payload: payload),
         ),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => ReviewProvider(),
-      ),
-      Provider(
-        create: (context) => RestaurantSqliteService(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => LocalDatabaseProvider(
-          context.read<RestaurantSqliteService>(),
+        ChangeNotifierProvider(
+          create: (context) => IndexNavProvider(),
+          //child: const MyApp(),
         ),
-      ),
-    ],
-    child: MyApp(
-      initialRoute: route,
+        ChangeNotifierProvider(
+          create: (context) => NotificationStateProvider(),
+        ),
+        ChangeNotifierProvider(create: (context) => ThemeStateProvider()),
+        Provider(create: (context) => ApiService()),
+        ChangeNotifierProvider(
+          create: (context) => SearchProvider(),
+          child: SearchScreen(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              RestaurantSearchProvider(context.read<ApiService>()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              RestaurantListProvider(context.read<ApiService>()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              RestaurantDetailProvider(context.read<ApiService>()),
+        ),
+        ChangeNotifierProvider(create: (context) => ReadMoreProvider()),
+        ChangeNotifierProvider(
+          create: (context) =>
+              RestaurantReviewProvider(context.read<ApiService>()),
+        ),
+        ChangeNotifierProvider(create: (context) => ReviewProvider()),
+        Provider(create: (context) => RestaurantSqliteService()),
+        ChangeNotifierProvider(
+          create: (context) =>
+              LocalDatabaseProvider(context.read<RestaurantSqliteService>()),
+        ),
+      ],
+      child: MyApp(initialRoute: route),
     ),
-  ));
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -146,8 +125,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sharedPreferencesProvider =
-        Provider.of<SharedPreferencesProvider>(context);
+    final sharedPreferencesProvider = Provider.of<SharedPreferencesProvider>(
+      context,
+    );
     sharedPreferencesProvider.getSettingValue();
 
     return MaterialApp(
@@ -159,11 +139,11 @@ class MyApp extends StatelessWidget {
       routes: {
         NavigationRoute.mainRoute.name: (context) => const MainScreen(),
         NavigationRoute.detailRoute.name: (context) => DetailScreen(
-            restaurantId:
-                ModalRoute.of(context)?.settings.arguments as String ?? ''),
+          restaurantId: ModalRoute.of(context)?.settings.arguments as String,
+        ),
         NavigationRoute.reviewRoute.name: (context) => ReviewScreen(
-            restaurantId:
-                ModalRoute.of(context)?.settings.arguments as String ?? ''),
+          restaurantId: ModalRoute.of(context)?.settings.arguments as String,
+        ),
       },
     );
   }

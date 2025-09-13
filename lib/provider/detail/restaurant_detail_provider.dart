@@ -21,13 +21,12 @@ class RestaurantDetailProvider extends ChangeNotifier {
 
       if (result.error) {
         _resultState = RestaurantDetailErrorState(errorMessage);
-        notifyListeners();
       } else {
         _resultState = RestaurantDetailLoadedState(result.restaurantDetail);
-        notifyListeners();
       }
-    } on Exception catch (e) {
+    } on Exception {
       _resultState = RestaurantDetailErrorState(errorMessage);
+    } finally {
       notifyListeners();
     }
   }

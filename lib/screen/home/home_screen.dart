@@ -18,7 +18,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     Future.microtask(() {
-      context.read<RestaurantListProvider>().fetchRestaurantList();
+      if (mounted) {
+        context.read<RestaurantListProvider>().fetchRestaurantList();
+      }
     });
   }
 
@@ -29,37 +31,37 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, value, child) {
           return switch (value.resultState) {
             RestaurantListLoadingState() => Center(
-                child: SizedBox(
-                  height: 80,
-                  width: 80,
-                  child: Lottie.asset("assets/loading.json"),
-                ),
+              child: SizedBox(
+                height: 80,
+                width: 80,
+                child: Lottie.asset("assets/loading.json"),
               ),
+            ),
             RestaurantListLoadedState(data: var restaurantList) =>
               BodyOfHomeScreen(restaurantList: restaurantList),
             RestaurantListErrorState(error: var message) => Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 55,
-                          width: 55,
-                          child: Lottie.asset(
-                            "assets/error_anim.json",
-                            fit: BoxFit.cover,
-                          ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 55,
+                        width: 55,
+                        child: Lottie.asset(
+                          "assets/error_anim.json",
+                          fit: BoxFit.cover,
                         ),
-                      ],
-                    ),
-                    SizedBox(height: 25, width: 25),
-                    Text(message),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 25, width: 25),
+                  Text(message),
+                ],
               ),
+            ),
             _ => const SizedBox(),
           };
         },

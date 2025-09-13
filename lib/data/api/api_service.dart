@@ -90,20 +90,20 @@ class ApiService {
   }
 
   Future<RestaurantReviewResponse> writeReview(
-      String id, String name, String review) async {
-    final headers = {
-      'Content-Type': 'application/json',
-    };
+    String id,
+    String name,
+    String review,
+  ) async {
+    final headers = {'Content-Type': 'application/json'};
 
-    final body = jsonEncode({
-      'id': id,
-      'name': name,
-      'review': review,
-    });
+    final body = jsonEncode({'id': id, 'name': name, 'review': review});
 
     try {
-      final response = await http.post(Uri.parse("$_baseUrl/review"),
-          headers: headers, body: body);
+      final response = await http.post(
+        Uri.parse("$_baseUrl/review"),
+        headers: headers,
+        body: body,
+      );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return RestaurantReviewResponse.fromJson(jsonDecode(response.body));
